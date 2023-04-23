@@ -1,0 +1,913 @@
+-- Create the ScreenGui
+
+local ScreenGui = Instance.new("ScreenGui")
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create the Frame for the UI
+
+local Frame = Instance.new("Frame")
+
+Frame.Size = UDim2.new(1, 0, 0, 50) -- Set the size of the Frame to fill the width of the screen and be 50 pixels tall
+
+Frame.Position = UDim2.new(0, 0, 0, 0) -- Set the position of the Frame to the top-left corner of the screen
+
+Frame.BackgroundColor3 = Color3.new(0, 0, 0) -- Set the background color to black
+
+Frame.Parent = ScreenGui
+
+-- Create a TextLabel to display the current time
+
+local TimeLabel = Instance.new("TextLabel")
+
+TimeLabel.Size = UDim2.new(0, 200, 1, 0) -- Set the size of the TimeLabel to be 200 pixels wide and fill the height of the Frame
+
+TimeLabel.Position = UDim2.new(0, 10, 0, 0) -- Set the position of the TimeLabel to 10 pixels from the left side of the Frame
+
+TimeLabel.BackgroundTransparency = 1 -- Set the background transparency to 0%
+
+TimeLabel.TextColor3 = Color3.new(1, 1, 1) -- Set the text color to white
+
+TimeLabel.Font = Enum.Font.ArialBold -- Set the font to Arial Bold
+
+TimeLabel.TextSize = 20 -- Set the text size to 20
+
+TimeLabel.TextXAlignment = Enum.TextXAlignment.Left -- Set the horizontal text alignment to left
+
+TimeLabel.Text = "Time: " .. os.date("%I:%M:%S %p") -- Set the text to the current time in HH:MM:SS AM/PM format
+
+TimeLabel.Parent = Frame
+
+-- Create a TextLabel to display the player's name
+
+local PlayerNameLabel = Instance.new("TextLabel")
+
+PlayerNameLabel.Size = UDim2.new(0, 200, 1, 0) -- Set the size of the PlayerNameLabel to be 200 pixels wide and fill the height of the Frame
+
+PlayerNameLabel.Position = UDim2.new(1, -210, 0, 0) -- Set the position of the PlayerNameLabel to 10 pixels from the right side of the Frame
+
+PlayerNameLabel.BackgroundTransparency = 1 -- Set the background transparency to 0%
+
+PlayerNameLabel.TextColor3 = Color3.new(1, 1, 1) -- Set the text color to white
+
+PlayerNameLabel.Font = Enum.Font.ArialBold -- Set the font to Arial Bold
+
+PlayerNameLabel.TextSize = 20 -- Set the text size to 20
+
+PlayerNameLabel.TextXAlignment = Enum.TextXAlignment.Right -- Set the horizontal text alignment to right
+
+PlayerNameLabel.Text = "Player: " .. game.Players.LocalPlayer.Name -- Set the text to the player's name
+
+PlayerNameLabel.Parent = Frame
+
+-- Create a button in the middle of the frame
+
+local Button = Instance.new("TextButton")
+
+Button.Size = UDim2.new(0, 200, 0, 50)
+
+Button.Position = UDim2.new(0.5, -100, 0.5, -25)
+
+Button.BackgroundColor3 = Color3.new(1, 1, 1)
+
+Button.TextColor3 = Color3.new(0, 0, 0)
+
+Button.Font = Enum.Font.ArialBold
+
+Button.TextSize = 20
+
+Button.Text = "Open Chanbe V4.1"
+
+Button.Parent = Frame
+
+-- Create a function to update the TimeLabel every second
+
+local function updateTimeLabel()
+
+    TimeLabel.Text = "Time: " .. os.date("%I:%M:%S %p") -- Set the text to the current time in HH:MM:SS AM/PM format
+
+end
+
+-- Update the TimeLabel every second
+
+while true do
+
+    updateTimeLabel()
+
+    wait(1)
+
+end
+
+-- Create a function to be called when the button is clicked
+
+local function onButtonClicked()
+
+game.StarterGui:SetCore("SendNotification", {
+
+    Title = "Chanbe V4.1 Loading";
+
+    Text = "Hub Loading"; -- what the text says (ofc)
+
+    Duration = 10;
+
+})
+
+wait(3)
+
+game.StarterGui:SetCore("SendNotification", {
+
+    Title = "Loaded";
+
+    Text = "Sub for V5"; -- what the text says (ofc)
+
+    Duration = 30;
+
+})
+
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
+
+local Window = Library.CreateLib("Chanbe v4.1", "DarkTheme")
+
+local Tab1 = Window:NewTab("Home")
+
+local Tab1Section = Tab1:NewSection("Information")
+
+local Tab2 = Window:NewTab("Updates")
+
+local Tab2Section = Tab2:NewSection("Updates For Chanbe Hub")
+
+local Tab3 = Window:NewTab("Settings")
+
+local Tab3Section = Tab3:NewSection("Game Settings(not fe)")
+
+local Tab4 = Window:NewTab("Games")
+
+local Tab4Section = Tab4:NewSection("Scripts")
+
+local Tab4Section1 = Tab4:NewSection("Blox Fruits")
+
+local Tab4Section2 = Tab4:NewSection("Bedwars")
+
+local Tab4Section3 = Tab4:NewSection("PSX")
+
+local Tab4Section4 = Tab4:NewSection("JailBreak")
+
+local Tab4Section5 = Tab4:NewSection("Build A Boat For Treasure")
+
+local Tab4Section6 = Tab4:NewSection("FE")
+
+local Tab4Section7 = Tab4:NewSection("Be A Parkour Ninja")
+
+local Tab4Section8 = Tab4:NewSection("Da Hood")
+
+local Tab4Section9 = Tab4:NewSection("Break In")
+
+local Tab4Section10 = Tab4:NewSection("Ohio")
+
+local Tab4Section11 = Tab4:NewSection("Work At A Pizza Place")
+
+local Tab4Section12 = Tab4:NewSection("Clicker Simulator")
+
+local Tab4Section13 = Tab4:NewSection("Natural Disaster")
+
+local Tab4Section14 = Tab4:NewSection("Muscle Legends")
+
+local Tab4Section15 = Tab4:NewSection("Ninja Legends(Delayed)")
+
+local Tab4Section16 = Tab4:NewSection("Bee Swarm Simulator(Delayes)")
+
+local Tab4Section17 = Tab4:NewSection("Broken Bones(Delayed)")
+
+local Tab4Section18 = Tab4:NewSection("Brookhaven(Delayed)")
+
+local Tab4Section19 = Tab4:NewSection("Adopt Me(Delayed)")
+
+local Tab4Section20 = Tab4:NewSection("Jenga(Delayed)")
+
+local Tab4Section21 = Tab4:NewSection("More in V5")
+
+local Tab5 = Window:NewTab("Others(Only 1)")
+
+local Tab5Section1 = Tab5:NewSection("JN HH Gaming")
+
+local Tab5Section2 = Tab5:NewSection("DPX team")
+
+local Tab5Section3 = Tab5:NewSection("Chillz")
+
+local Tab5Section4 = Tab5:NewSection("Dakarai X")
+
+local Tab6 = Window:NewTab("Showcasers")
+
+local Tab6Section = Tab6:NewSection("I Have Non D:")
+
+local Tab7 = Window:NewTab("Credits")
+
+local Tab7Section = Tab7:NewSection("People")
+
+local Tab8 = Window:NewTab("Paid")
+
+local Tab8Section = Tab8:NewSection("Scripts")
+
+local Tab9 = Window:NewTab("My Scripts")
+
+local Tab9Section = Tab9:NewSection("Hubs/Scripts")
+
+--Tab1
+
+Tab1Section:NewButton("See All Information", "Tap It To see", function()
+
+game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("/console","All")
+
+end)
+
+Tab1Section:NewButton("Information(press this then press see all)", "tap it to see", function()
+
+    print("This Hub May Have Some Scripts That Don't Work")
+
+    wait(0.1)
+
+    print("But Why?")
+
+    wait(0.1)
+
+    print("1.Maybe Your Executer Level Not High Enough")
+
+    wait(0.1)
+
+    print("2.Maybe I forgot to put the script?")
+
+end)
+
+--Tab2
+
+Tab2Section:NewLabel("V1 cant drag")
+
+Tab2Section:NewLabel("V2 more script and fixed some scripts")
+
+Tab2Section:NewLabel("V3 Added Drag")
+
+Tab2Section:NewLabel("V4 More Scripts")
+
+Tab2Section:NewLabel("V4.1 Time/Username/Open Script")
+
+--Tab3
+
+Tab3Section:NewButton("Full Bright", "Make Games Full Bright", function()
+
+local Light = game:GetService("Lighting")
+
+
+
+function dofullbright()
+
+Light.Ambient = Color3.new(1, 1, 1)
+
+Light.ColorShift_Bottom = Color3.new(1, 1, 1)
+
+Light.ColorShift_Top = Color3.new(1, 1, 1)
+
+end
+
+
+
+dofullbright()
+
+
+
+Light.LightingChanged:Connect(dofullbright)
+
+end)
+
+Tab3Section:NewButton("Infinite Yield", "Opens Infinite Yield", function()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+
+end)
+
+Tab3Section:NewButton("Better Roblox Script", "Settings Become Better", function()
+
+loadstring(game:HttpGet("https://eternityhub.xyz/BetterRoblox/Loader"))()
+
+end)
+
+Tab3Section:NewButton("Keyboard(For Mobile)", "Open A Keyboard", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+
+end)
+
+Tab3Section:NewButton("Remote Spy", "Turtle Spy", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/BDhSQqUU"))();
+
+end)
+
+--Tab4
+
+--Tab4Section1
+
+Tab4Section1:NewButton("HOHO HUB", "Nothing...", function()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'))()
+
+end)
+
+Tab4Section1:NewButton("SPEED HUB", "Nothing...", function()
+
+loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ahmadsgamer2/Script--Game/main/Script%20Game"))()
+
+end)
+
+Tab4Section1:NewButton("SONIC HUB", "Nothing...", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NickelHUBB/SonicTuru/main/Protected-25.lua"))()
+
+end)
+
+Tab4Section1:NewButton("NUB HUB", "Nothing...", function()
+
+loadstring(game:HttpGet('https://rawscripts.net/raw/UPDATE-16-Blox-Fruits-Nub-V1-Hub-4583'))()
+
+end)
+
+Tab4Section1:NewButton("Winnable Hub", "Nothing...", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/xlostpexz/tyuiop/Fps/Loading.lua"))()
+
+end)
+
+Tab4Section1:NewButton("Auto Chest", "Teleport To Chests", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptpastebin/raw/main/Chest_onoff"))() 
+
+end)
+
+Tab4Section1:NewButton("Auto Fruits", "Teleport To Fruits (If Have)", function()
+
+Fruits = {
+
+"Human: Buddha Fruit",
+
+"Bird: Phoenix Fruit",
+
+"Rumble Fruit",
+
+"Paw Fruit",
+
+"Gravity Fruit",
+
+"Dough Fruit",
+
+"Control Fruit",
+
+"Venom Fruit",
+
+"Shadow Fruit",
+
+"Dragon Fruit" ,
+
+"Soul Fruit",
+
+"Leopard Fruit"
+
+}
+
+Valuable = {"Dough Fruit","Shadow Fruit","Venom Fruit","Control Fruit","Dragon Fruit","Soul Fruit","Leopard Fruit"} ------ it will stop the script if you got this fruit
+
+Webhook = "" --------------------------------Optional
+
+Store = true  --------------------------------Auto Store after it got the fruit
+
+Safeplace = true ----------------------------- Safeplace 
+
+Repeat = true --------------------------------- Repeat continues hopping
+
+-----------------------------------------------------------------------
+
+loadstring(game:HttpGet"https://gist.githubusercontent.com/NotHubris/4e6fdc88d84c30afa9b28c590f273bbf/raw")()
+
+end)
+
+--Tab4Section2
+
+Tab4Section2:NewButton("Chanbe Bedwars(Bad)", "Its A Bad Script Ngl", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AaaaaaMaaaa/BUCKERS/main/Baedwats"))();
+
+end)
+
+Tab4Section2:NewButton("Vapev4Gui", "..", function()
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+
+local Window = Library.CreateLib("Vapev4", "DarkTheme")
+
+local Tab = Window:NewTab("Tab1")
+
+local Section = Tab:NewSection("Vapev4")
+
+Section:NewButton("Open Vapev4", "", function()loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
+
+    print("Clicked")
+
+end)
+
+end)
+
+Tab4Section2:NewButton("Rise Script", "Like Vape", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/RiseForRoblox/main/main.lua", true))()
+
+end)
+
+Tab4Section2:NewButton("Vezt Hub", "Bedwars Hub", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/VeztWare/Vezt/main/Vezt%20-%20Bedwars%20%E2%80%A2%20V2.lua"))()
+
+end)
+
+Tab4Section2:NewButton("Future Script", "Bedwars Vape Like", function()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/joeengo/Future/main/loadstring.lua', true))()
+
+end)
+
+--Tab4Section3
+
+Tab4Section3:NewButton("PSX Jmes", "PSX Script", function()
+
+loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/jmesfo0/RobloxScripts/main/psx-jmes.lua"))() 
+
+end)
+
+Tab4Section3:NewButton("Milk UP", "PSX Script", function()
+
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/a82cd5447cbbc4c7be0e8db405555787.lua"))()
+
+end)
+
+Tab4Section3:NewButton("PSX ", "PSX Script", function()
+
+loadstring(game:HttpGet"https://raw.githubusercontent.com/sinnx32/prx/main/Petsim")()
+
+end)
+
+--Tab4Section4
+
+Tab4Section4:NewButton("JailBreak Script(Name Unknown)", "Not That OP", function()
+
+loadstring(game:GetObjects("rbxassetid://3473939051")[1].Source)()
+
+end)
+
+Tab4Section4:NewButton("ICE TRAY (KEY IN DISCO)", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/piglex9/icetray3/main/latest.lua"))()
+
+wait()
+
+setclipboard("https://discord.com/invite/Pwfh3YsV2M")
+
+end)
+
+--Tab4Section5
+
+Tab4Section5:NewButton("Build A Boat For Treasure.exe", "OP", function()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/XRoLLu/UWU/main/BUILD%20A%20BOAT%20FOR%20TREASURE.lua'))()
+
+end)
+
+Tab4Section5:NewButton("Auto Build Script", "Automatically Build Stuff For You", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/max2007killer/auto-build-not-limit/main/autobuild.txt"))()
+
+end)
+
+Tab4Section5:NewButton("Build A Boat For Treasure Script(Unknown Name)", "OP", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/Lyy77rnr",true))()
+
+end)
+
+Tab4Section5:NewButton("BABFT HUB", "OP", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/Lyy77rnr",true))()
+
+end)
+
+--Tab4Section6
+
+Tab4Section6:NewButton("FE PP", "SHOWS A PP(NOT FOR GIRL AVATARS)", function()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/BlueDino-B0T/PP-Script/main/PP%20Script'))()
+
+end)
+
+Tab4Section6:NewButton("FE HATS", "FLOAT HATS", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/4B4fktPS", true))()
+
+end)
+
+Tab4Section6:NewButton("FE FRIEND", "CLiCK WHERE UR FRIEND GoES", function()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/rouxhaver/scripts/main/FE_Friend.Lua'))()
+
+end)
+
+Tab4Section6:NewButton("FE DOC.Kajdbdb(no hats need netless)", "no hats", function()
+
+loadstring(game:HttpGet(("https://gist.githubusercontent.com/redmoons1/5a1821d7ca5498e67856c1611ba369a0/raw/ed5d4242972df04dd1543738d0c90ce4a311e65a/dr%2520live"),true))()
+
+end)
+
+Tab4Section6:NewButton("FE mr.eating", "Cool Dude floating eating", function()
+
+loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\40\39\104\116\116\112\115\58\47\47\112\97\115\116\101\102\121\46\103\97\47\103\86\56\87\50\73\118\50\47\114\97\119\39\41\44\116\114\117\101\41\41\40\41\10")()
+
+end)
+
+Tab4Section6:NewButton("FE gale fighter", "Cool Fighter With animations", function()
+
+loadstring(game:HttpGet(('https://pastefy.ga/w08T3Ib1/raw'),true))()
+
+end)
+
+Tab4Section6:NewButton("FE monster vereus", "become a monster", function()
+
+loadtstring(game:HttpGet("https://pastebin.com/raw/fLrx77PM"))();
+
+end)
+
+Tab4Section6:NewButton("FE hat holder", "hold your hats", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/L1axFXZA"))();
+
+end)
+
+Tab4Section6:NewButton("FE finger (sus)", "have a finger", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Traphood86/Finger-script-v2-/main/finger.txt"))();
+
+end)
+
+Tab4Section6:NewButton("FE ink man", "", function()
+
+loadstring(game:HttpGet(('https://pastefy.ga/Lb4LeKXB/raw'),true))()
+
+end)
+
+Tab4Section6:NewButton("KillBot v2", "", function()
+
+loadstring(game:HttpGetAsync("https://bit.ly/3sQWSuV"))()
+
+end)
+
+Tab4Section6:NewButton("FE John Doe", "John Doe", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/rhivQJVM"))();
+
+end)
+
+--Tab4Section7
+
+Tab4Section7:NewButton("Hitbox + Infinite Jump", "OP", function()
+
+local InfiniteJumpEnabled = true
+
+game:GetService("UserInputService").JumpRequest:connect(function()
+
+	if InfiniteJumpEnabled then		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+
+	end
+
+end)
+
+local vu = game:GetService("VirtualUser")
+
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+
+    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+
+    wait(1)
+
+    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+
+end)
+
+ 
+
+_G.HeadSize = 20
+
+_G.Disabled = true
+
+game:GetService('RunService').RenderStepped:connect(function()
+
+if _G.Disabled then
+
+for i,v in next, game:GetService('Players'):GetPlayers() do
+
+if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+
+pcall(function()
+
+v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+
+v.Character.HumanoidRootPart.Transparency = 0.7
+
+v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really Black")
+
+v.Character.HumanoidRootPart.Material = "Neon"
+
+v.Character.HumanoidRootPart.CanCollide = false
+
+end)
+
+end
+
+end
+
+end
+
+end)
+
+end)
+
+Tab4Section7:NewButton("Reach + Sword Chooser", "Pretty Cool", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/yYAyqP6N"))();
+
+end)
+
+--Tab4Section8
+
+Tab4Section8:NewButton("Da Hood Aimlock", "lock on players", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/iNd3xTPv"))()
+
+end)
+
+Tab4Section8:NewButton("NukerMode", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Allvideo/test/main/Whitelist.txt"))()
+
+end)
+
+Tab4Section8:NewButton("SwagMode", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/lerkermer/lua-projects/master/SwagModeV002%27"))()
+
+end)
+
+Tab4Section8:NewButton("ZinxzHub", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Zinzs/luascripting/main/canyoutellitsadahoodscriptornot.lua"))()
+
+end)
+
+--Tab4Section9
+
+Tab4Section9:NewButton("UnknownHub", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Nikita365/Break-In-Story-/main/Break%20In%20Story%20Hub"))()
+
+end)
+
+Tab4Section9:NewButton("X Breal Ib", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/XRoLLu/UWU/main/Break-In(Story)-X-Obfuscated.lua"))()
+
+end)
+
+Tab4Section9:NewButton("Plasma Hub", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RubyBoo4life/break-in-v1/main/.gitignore"))();
+
+end)
+
+Tab4Section9:NewButton("BeboBreakIn", "OP script", function()
+
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/Bebo-Mods/BeboScripts/main/BreakInStory.lua")))()
+
+end)
+
+Tab4Section9:NewButton("X Hub", "OP script", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Bebo-Mods/XHub/main/HubLoader.lua", true))()
+
+end)
+
+--Tab4Section10
+
+Tab4Section10:NewButton("OHIO.", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Mstir16/legocheats/main/archive/Ohio./script.lua"))()
+
+end)
+
+Tab4Section10:NewButton("ONE PUNCH", "OP", function()
+
+local oldNC
+
+oldNC = hookmetamethod(game, "__namecall", function(Self, ...)
+
+local Arguments = {...}
+
+local Method = getnamecallmethod()
+
+if Method == "FireServer" and Self.Name == "meleeHit" then
+
+Arguments[2]["meleeType"] = "superpunch"
+
+end
+
+return oldNC(Self, unpack(Arguments))
+
+end)
+
+end)
+
+Tab4Section10:NewButton("Encrpt", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/LPrandom/lua-projects/master/1/dahoodencrypt.lua"))()
+
+end)
+
+--Tab4Section11
+
+Tab4Section11:NewButton("AUTOFARM", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/centerepic/WorkAtAPizzaPlaceAutofarm/main/WAPP_Legitfarmv2.lua"))()
+
+end)
+
+Tab4Section11:NewButton("UNKNOWN NAME", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxHackingProject/HPHub/main/HPHub.lua"))()
+
+end)
+
+Tab4Section11:NewButton("UNKNOWN NAME", "OP", function()
+
+loadstring(game:HttpGet("https://gist.githubusercontent.com/TurkOyuncu99/bb2f1182a224999682a2d1a87aa8517a/raw/66c7791224be0434b23938ca26244238649d0143/ameicaa", true))()
+
+end)
+
+--Tab4Section12
+
+Tab4Section12:NewButton("ToralsMe", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ToraIsMe/ToraIsMe/main/0clicker", true))()
+
+end)
+
+Tab4Section12:NewButton("Kederal", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Kederal/script.gg/main/loader.lua"))()
+
+end)
+
+--Tab4Section13
+
+Tab4Section13:NewButton("garfield hub", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/2dgeneralspam1/scripts-and-stuff/master/scripts/garfield%20hub", true))()
+
+end)
+
+Tab4Section13:NewButton("Hub", "OP", function()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/hussain1323232234/My-Scripts/main/Natural%20Disaster'))()
+
+end)
+
+Tab4Section13:NewButton("Hub2", "OP", function()
+
+_G.RedGUI = false
+
+_G.Theme = "Jester" -- Must disable or remove _G.RedGUI to use
+
+--Themes: Light, Dark, Mocha, Aqua and Jester
+
+_G.V3rmillion = true
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/CasperFlyModz/discord.gg-rips/main/NaturalDisasterSurvival.lua"))()
+
+end)
+
+--Tab4Section14
+
+Tab4Section14:NewButton("OP SCRIPT(WAIT 5 SEC TO LOAD)", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/harisiskandar178/Roblox-Script/main/Muscle%20Legend"))()
+
+end)
+
+Tab4Section14:NewButton("V.G HUB", "OP", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/1201for/littlegui/main/MuscleLegends"))()
+
+end)
+
+Tab4Section14:NewButton("OP AUTOGRIND", "OP", function()
+
+game.StarterGui:SetCore("SendNotification", {
+
+    Title = "U DIDNT PAY FOR THIS";
+
+    Text = "KICKED FOR NOT PAYING"; -- what the text says (ofc)
+
+    Duration = 30;
+
+})
+
+wait()
+
+game:GetService("Players").LocalPlayer:Kick("YOU DID NOT PAY LOL")
+
+end)
+
+--Tab5
+
+Tab5Section1:NewButton("Lucky Block", "OP", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/Y4Xxq428"))();
+
+end)
+
+Tab5Section2:NewButton("Games Hub", "AAAA", function()
+
+game.StarterGui:SetCore("SendNotification", {
+
+    Title = "LOL NO HUBS ARE IN HUBS";
+
+    Text = ""; -- what the text says (ofc)
+
+    Duration = 10;
+
+})
+
+end)
+
+Tab5Section3:NewButton("Skidded AX", "LOL", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3"))()
+
+end)
+
+Tab5Section4:NewButton("BEDWARS", "AA", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/GamingScripter/bedwars/main/Script", true))()
+
+end)
+
+--Tab7
+
+Tab7Section:NewLabel("The People Who Made The Script")
+
+Tab7Section:NewLabel("Content Creators Showcasing")
+
+Tab7Section:NewLabel("Made By Chanbe")
+
+--Tab8
+
+Ta8Section:NewButton("Hat Hub", "leaked", function()
+
+loadstring(game:HttpGet("https://gist.githubusercontent.com/thekaisbest/acced28086f894c68a17cee424ccb1ff/raw/46312c6bef1b5019da18ba406b9c157cee403bdf/hat%2520hub"))();
+
+end)
+
+Tab8Section:NewButton("Got Scammed In Two Sec(Emoji GUI)", "OP", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/eCpipCTH"))()
+
+end)
+
+Tab8Section:NewButton("last of all YUN HUB(Da Hood)", "I did not just💀Sub Guys", function()
+
+getgenv().key = "ZrfV0A9oK8k8Bx"
+
+getgenv().scriptID = "v5qUS6uaZk1holSXazPJ"
+
+loadstring(game:HttpGet(("http://135.125.132.19:8080/script/%s"):format(scriptID)))()
+
+end)
+
+Tab8Section:NewButton("Script Searcher", "lol", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/ScriptSearcher"))()
+
+end)
+
+--Tab9
+
+Tab9Section:NewLabel("When V5")
+
+    print("Button Clicked!")
+
+end
+
+-- Connect the function to the button's MouseButton1Click event
+
+Button.MouseButton1Click:Connect(onButtonClicked)
