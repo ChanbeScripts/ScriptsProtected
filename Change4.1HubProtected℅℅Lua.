@@ -46,7 +46,7 @@ game.StarterGui:SetCore("SendNotification", {
 
 local Library = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
 
-local Window = Library.CreateLib("Chanbe v4.0", "DarkTheme")
+local Window = Library.CreateLib("Chanbe v4.1", "DarkTheme")
 
 local Tab1 = Window:NewTab("Home")
 
@@ -166,9 +166,9 @@ Tab2Section:NewLabel("V2 more script and fixed some scripts")
 
 Tab2Section:NewLabel("V3 Added Drag")
 
-Tab2Section:NewLabel("V3 Added Drag")
+Tab2Section:NewLabel("V4 More scripts")
 
-Tab2Section:NewLabel("V3 Added Drag")
+Tab2Section:NewLabel("V4.1 close/open")
 
 --Tab3
 
