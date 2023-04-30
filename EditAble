@@ -8,6 +8,16 @@ game.StarterGui:SetCore("SendNotification", {
 
 })
 
+game.StarterGui:SetCore("SendNotification", {
+
+    Title = "Executed Successfully";
+
+    Text = "SCRIPT EXECUTED"; -- what the text says (ofc)
+
+    Duration = 10;
+
+})
+
 wait(3)
 
 game.StarterGui:SetCore("SendNotification", {
