@@ -1,0 +1,236 @@
+-- Copy the start of ui
+
+local gui = Instance.new("ScreenGui")
+
+gui.Name = "MyUI"
+
+gui.ResetOnSpawn = false
+
+gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create the background
+
+local background = Instance.new("Frame")
+
+background.Size = UDim2.new(0, 200, 0, 300)
+
+background.Position = UDim2.new(0, 10, 0, 10)
+
+background.BackgroundColor3 = Color3.new(0, 0, 0)
+
+background.BackgroundTransparency = 0.5
+
+background.Parent = gui
+
+-- Create the title
+
+local title = Instance.new("TextLabel")
+
+title.Size = UDim2.new(1, 0, 0, 50)
+
+title.Position = UDim2.new(0, 0, 0, 0)
+
+title.BackgroundColor3 = Color3.new(0, 0, 0)
+
+title.BorderSizePixel = 0
+
+title.Text = "My UI"
+
+title.Font = Enum.Font.SourceSansBold
+
+title.TextSize = 24
+
+title.TextColor3 = Color3.new(1, 1, 1)
+
+title.Parent = background
+
+-- Create the scrolling frame
+
+local scrollingFrame = Instance.new("ScrollingFrame")
+
+scrollingFrame.Size = UDim2.new(1, 0, 1, -50)
+
+scrollingFrame.Position = UDim2.new(0, 0, 0, 50)
+
+scrollingFrame.BackgroundTransparency = 1
+
+scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+
+scrollingFrame.Parent = background
+
+-- Define the function to add a button to the scrolling frame
+
+local function addButton(text, func)
+
+    local button = Instance.new("TextButton")
+
+    button.Size = UDim2.new(0.3, -10, 0, 50)
+
+    button.Position = UDim2.new(0, 5, 0, (50 * #scrollingFrame:GetChildren()))
+
+    button.BackgroundColor3 = Color3.new(0, 0, 0)
+
+    button.BorderSizePixel = 0
+
+    button.Text = text
+
+    button.Font = Enum.Font.SourceSansBold
+
+    button.TextSize = 20
+
+    button.TextColor3 = Color3.new(1, 1, 1)
+
+    button.Parent = scrollingFrame
+
+    button.MouseButton1Click:Connect(func)
+
+    scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 50 * #scrollingFrame:GetChildren())
+
+end
+
+-- Define the function to add a text box to the scrolling frame
+
+local function addTextBox(placeholderText, func)
+
+    local textBox = Instance.new("TextBox")
+
+    textBox.Size = UDim2.new(0.7, -10, 0, 50)
+
+    textBox.Position = UDim2.new(0.3, 5, 0, (50 * #scrollingFrame:GetChildren()))
+
+    textBox.BackgroundColor3 = Color3.new(0, 0, 0)
+
+    textBox.BorderSizePixel = 0
+
+    textBox.Text = ""
+
+    textBox.Font = Enum.Font.SourceSansBold
+
+    textBox.TextSize = 20
+
+    textBox.TextColor3 = Color3.new(1, 1, 1)
+
+    textBox.PlaceholderText = placeholderText
+
+    textBox.ClearTextOnFocus = false
+
+    textBox.Parent = scrollingFrame
+
+    textBox.FocusLost:Connect(function(enterPressed)
+
+        if enterPressed then
+
+            func(textBox.Text)
+
+            textBox.Text = ""
+
+        end
+
+    end)
+
+    scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 50 * #scrollingFrame:GetChildren())
+
+end
+
+--elements
+
+-- Create the UI
+
+local gui = Instance.new("ScreenGui")
+
+gui.Name = "MyUI"
+
+gui.ResetOnSpawn = false
+
+gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create the background
+
+local background = Instance.new("Frame")
+
+background.Size = UDim2.new(0, 200, 0, 300)
+
+background.Position = UDim2.new(0, 10, 0, 10)
+
+background.BackgroundColor3 = Color3.new(0, 0, 0)
+
+background.BackgroundTransparency = 0.5
+
+background.Parent = gui
+
+-- Create the title
+
+local title = Instance.new("TextLabel")
+
+title.Size = UDim2.new(1, 0, 0, 50)
+
+title.Position = UDim2.new(0, 0, 0, 0)
+
+title.BackgroundColor3 = Color3.new(0, 0, 0)
+
+title.BorderSizePixel = 0
+
+title.Text = "My UI"
+
+title.Font = Enum.Font.SourceSansBold
+
+title.TextSize = 24
+
+title.TextColor3 = Color3.new(1, 1, 1)
+
+title.Parent = background
+
+-- Create the scrolling frame
+
+local scrollingFrame = Instance.new("ScrollingFrame")
+
+scrollingFrame.Size = UDim2.new(1, 0, 1, -50)
+
+scrollingFrame.Position = UDim2.new(0, 0, 0, 50)
+
+scrollingFrame.BackgroundTransparency = 1
+
+scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+
+scrollingFrame.Parent = background
+
+-- Define the function to add a button to the scrolling frame
+
+local function addButton(text, func)
+
+    local button = Instance.new("TextButton")
+
+    button.Size = UDim2.new(0.3, -10, 0, 50)
+
+    button.Position = UDim2.new(0, 5, 0, (50 * #scrollingFrame:GetChildren()))
+
+    button.BackgroundColor3 = Color3.new(0, 0, 0)
+
+    button.BorderSizePixel = 0
+
+    button.Text = text
+
+    button.Font = Enum.Font.SourceSansBold
+
+    button.TextSize = 20
+
+    button.TextColor3 = Color3.new(1, 1, 1)
+
+    button.Parent = scrollingFrame
+
+    button.MouseButton1Click:Connect(func)
+    
+   --elements
+
+
+addButton("Button 1", function()
+
+    print("Button 1 clicked!")
+
+end)
+
+addTextBox("Enter text...", function(text)
+
+    print("Entered text: " .. text)
+
+end)
