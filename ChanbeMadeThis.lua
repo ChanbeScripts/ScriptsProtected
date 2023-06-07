@@ -1219,3 +1219,99 @@ Tab1Section:NewButton("FixCam", "fix camera bug on mobile", function()
 	cam.CameraType = Enum.CameraType.Custom
 
 end)
+
+Tab1Section:NewToggle("CFrame", "", function(state)
+
+	if state then
+
+		BindToStepped("CFrameWalkSpeed", 1, function(time, delta)
+
+			if entity.isAlive then
+
+				local newpos = (lplr.Character.Humanoid.MoveDirection  * (speedval["Value"] - lplr.Character.Humanoid.WalkSpeed)) * delta
+
+				local raycastparameters = RaycastParams.new()
+
+				raycastparameters.FilterDescendantsInstances = {lplr.Character}
+
+				local ray = workspace:Raycast(lplr.Character.HumanoidRootPart.Position, newpos, raycastparameters)
+
+				if ray then newpos = (ray.Position - lplr.Character.HumanoidRootPart.Position) end
+
+				lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + newpos
+
+			end
+
+		end)
+
+	else
+
+		UnbindFromStepped("CFrameWalkSpeed")
+
+	end
+
+end)
+
+Tab1Section:NewSlider("Speed 1-42", "Adjust CFrame speed", 42, 1, function(s)
+
+	speedval["Value"] = s
+
+end)
+
+Tab2Section:NewToggle("Bed Nuker", "Auto break bed and covers", function(state)
+
+	if state then
+
+		BindToStepped("BedNuker", 1, function()
+
+			nuker()
+
+		end)
+
+	else
+
+		UnbindFromStepped("BedNuker")
+
+	end
+
+end)
+
+Tab1Section:NewButton("Keyboard", "Opens Keyboard", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/kC3dAMvt"))()
+
+end)
+
+Tab1Section:NewToggle("No Fall Damage", "Opens No Fall Damage", function(callback)
+
+    local nofall = true
+
+    if callback then
+
+        if nofall then
+
+            spawn(function()
+
+                repeat
+
+                    wait()
+
+                    if nofall == false then
+
+                        return end
+
+                        game:GetService("ReplicatedStorage").rbxts_include.node_modules.net.out._NetManaged.GroundHit:FireServer()
+
+                    until nofall == false
+
+                end)
+
+            end
+
+    else
+
+        local nofall = false
+
+    end
+
+end)
