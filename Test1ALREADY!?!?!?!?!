@@ -1,0 +1,581 @@
+local GuiLibrary = {}
+
+local Gui = Instance.new("ScreenGui")
+
+local EditGui = Instance.new("ScreenGui")
+
+local WatermarkGui = Instance.new("ScreenGui")
+
+local Keystrokes = Instance.new("ScreenGui")
+
+local GameSave = shared["azuragame"]
+
+local Azura = shared["azura"]
+
+local ProtectUI = function(v)
+
+    v.Name = game:GetService("HttpService"):GenerateGUID(false)
+
+    if syn then syn.protect_gui(v) end
+
+    if gethui then
+
+        v.Parent = gethui()
+
+    else
+
+        v.Parent = game:GetService("CoreGui")
+
+    end
+
+end
+
+Gui.ResetOnSpawn = false
+
+Gui.Enabled = false
+
+ProtectUI(Gui)
+
+Gui.Name = 'blackazura'
+
+EditGui.ResetOnSpawn = false
+
+EditGui.Enabled = false
+
+ProtectUI(EditGui)
+
+WatermarkGui.ResetOnSpawn = false
+
+WatermarkGui.Enabled = true
+
+ProtectUI(WatermarkGui)
+
+Keystrokes.ResetOnSpawn = false
+
+Keystrokes.Enabled = false
+
+ProtectUI(Keystrokes)
+
+local Notifications = Instance.new("ScreenGui")
+
+Notifications.ResetOnSpawn = false
+
+ProtectUI(Notifications)
+
+local LineFrm = Instance.new("Frame")
+
+LineFrm.BackgroundTransparency = 1
+
+LineFrm.AnchorPoint = Vector2.new(0.5, 0.5)
+
+LineFrm.Size = UDim2.new(0, 932, 0, 0)
+
+LineFrm.Position = UDim2.new(0.499, 0, -1, 0)
+
+LineFrm.Parent = Gui
+
+local UIL = Instance.new("UIListLayout")
+
+UIL.FillDirection = Enum.FillDirection.Horizontal
+
+UIL.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+UIL.SortOrder = Enum.SortOrder.LayoutOrder
+
+UIL.Padding = UDim.new(0, 30)
+
+UIL.Parent = LineFrm
+
+local mainmark = Instance.new("TextLabel")
+
+mainmark.TextStrokeTransparency = 0.75
+
+mainmark.BackgroundTransparency = 1
+
+mainmark.Size = UDim2.new(0, 250, 0, 85)
+
+mainmark.Text = "ChanbeWare"
+
+mainmark.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+mainmark.TextScaled = true
+
+mainmark.Font = Enum.Font.GothamMedium
+
+mainmark.Parent = WatermarkGui
+
+local markgrandient = Instance.new("UIGradient")
+
+markgrandient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(180, 80, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(230, 120, 228))}
+
+markgrandient.Parent = mainmark
+
+local uidmark = mainmark:Clone()
+
+uidmark.Text = "version BETA v2 | UID: 0"
+
+uidmark.Size = UDim2.new(0, 250, 0, 20)
+
+uidmark.Position = UDim2.new(0, 0, 0.871, 0)
+
+uidmark.Parent = mainmark
+
+local infolabel = Instance.new("TextLabel")
+
+infolabel.BackgroundTransparency = 0.3
+
+infolabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+
+infolabel.BorderSizePixel = 0
+
+infolabel.Size = UDim2.new(0, 1223, 0, 60)
+
+infolabel.Font = Enum.Font.GothamMedium
+
+infolabel.Text = "[ChanbeWare]Made By Chanbe"
+
+infolabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+infolabel.Position = UDim2.new(0.126, 0, 0.881, 0)
+
+infolabel.TextSize = 28
+
+infolabel.TextXAlignment = Enum.TextXAlignment.Left
+
+infolabel.TextYAlignment = Enum.TextYAlignment.Bottom
+
+infolabel.Parent = Gui
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/miroeramaa/TurtleLib/main/TurtleUiLib.lua"))()
+
+local window1 = library:Window("Combat")
+
+local window2 = library:Window("World")
+
+local window3 = library:Window("Blatant")
+
+local window4 = library:Window("Render")
+
+window1:Button("KillAura V1", function()
+
+ local function getClosest()
+
+   local closest = math.huge
+
+   local choice = game.Players.LocalPlayer
+
+   
+
+   for i,v in next, game.Players:GetChildren() do
+
+       if v.Character and v.Character:FindFirstChild("HumanoidRootPart") and v.Name ~= game.Players.LocalPlayer.Name and v.Team ~= game.Players.LocalPlayer.Team then
+
+           local dist = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).Magnitude
+
+           
+
+           if dist <= closest then
+
+               closest = dist
+
+               choice = v
+
+           end
+
+       end
+
+   end
+
+   
+
+   return choice
+
+end
+
+game:GetService("RunService").RenderStepped:Connect(function()
+
+       pcall(function()
+
+       local closest = getClosest().Character
+
+       
+
+       if closest ~= nil then
+
+           game:GetService("ReplicatedStorage").rbxts_include.node_modules.net.out._NetManaged.SwordHit:InvokeServer({["entityInstance"] = closest,["weapon"] = game.Players.LocalPlayer.Character.HandInvItem.Value})
+
+       end
+
+   end)
+
+end)
+
+end)
+
+window1:Button("KillAuraV2", function()
+
+ local player = game:GetService("Players")
+
+local lplr = player.LocalPlayer
+
+local cam = workspace.CurrentCamera
+
+local KnitClient = debug.getupvalue(require(lplr.PlayerScripts.TS.knit).setup, 6)
+
+local SwordCont = KnitClient.Controllers.SwordController
+
+local aura = true
+
+local DistVal = {["Value"] = 14}
+
+function Aura()
+
+	for i,v in pairs(game.Players:GetChildren()) do
+
+		if v.Character and v.Name ~= game.Players.LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
+
+			local mag = (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+
+			if mag <= DistVal["Value"] and v.Team ~= game.Players.LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") then
+
+				if v.Character.Humanoid.Health > 0 then
+
+					aura = true
+
+                    SwordCont:swingSwordAtMouse()
+
+end
+
+end
+
+end
+
+end
+
+end
+
+game:GetService("RunService").Stepped:connect(function()
+
+Aura()
+
+end)
+
+end)
+
+window1:Button("AntiVoid", function()
+
+ local e = Instance.new("Part",workspace)
+
+		e.Size = Vector3.new(99999999,2,999999999999)
+
+		e.Position = Vector3.new(0,20,0)
+
+		e.Anchored = true
+
+		e.BrickColor = BrickColor.new("Royal purple")
+
+		e.Transparency = 0.5
+
+		local function PlayerTouched(Part)
+
+			local Parent = Part.Parent
+
+			if game.Players:GetPlayerFromCharacter(Parent) then
+
+				for i = 1,3 do wait()
+
+					Parent.HumanoidRootPart.CFrame = Parent.HumanoidRootPart.CFrame + Vector3.new(0,25,0)
+
+				end
+
+			end
+
+		end
+
+		e.Touched:connect(PlayerTouched)
+
+end)
+
+window1:Button("OtherKillAura", function()
+
+local anims = { --Moon stuff that was probably helped by vape no cap
+
+            Normal = {
+
+                {CFrame = CFrame.new(1, -1, 2) * CFrame.Angles(math.rad(295), math.rad(55), math.rad(290)), Time = 0.25},
+
+                {CFrame = CFrame.new(-1, 1, -2.2) * CFrame.Angles(math.rad(200), math.rad(60), math.rad(1)), Time = 0.25}
+
+            },
+
+        }
+
+        local origC0 = cam.Viewmodel.RightHand.RightWrist.C0
+
+        local ui2 = Instance.new("ScreenGui")
+
+        local nearestID = nil
+
+        ui2.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+        target = nil
+
+        repeat
+
+                if not isalive(lplr) then
+
+                    repeat wait() until isalive(lplr)
+
+                end
+
+                for _,v in pairs(game.Players:GetPlayers()) do
+
+                    if v ~= lplr then
+
+                        nearestID = v
+
+                        target = v.Name
+
+                        if v.Team ~= lplr.Team and v ~= lplr and isalive(v) and v.Character:FindFirstChild("HumanoidRootPart") and (v.Character.HumanoidRootPart.Position - lplr.Character.HumanoidRootPart.Position).Magnitude < 20 then
+
+                            local sword = getSword()
+
+                            if sword ~= nil then
+
+                                bedwars["SwordController"].lastAttack = game:GetService("Workspace"):GetServerTimeNow() - 0.11
+
+                                HitRemote:SendToServer({
+
+                                    ["weapon"] = sword.tool,
+
+                                    ["entityInstance"] = v.Character,
+
+                                    ["validate"] = {
+
+                                        ["raycast"] = {
+
+                                            ["cameraPosition"] = hashFunc(cam.CFrame.Position),
+
+                                            ["cursorDirection"] = hashFunc(Ray.new(cam.CFrame.Position, v.Character:FindFirstChild("HumanoidRootPart").Position).Unit.Direction)
+
+                                        },
+
+                                        ["targetPosition"] = hashFunc(v.Character:FindFirstChild("HumanoidRootPart").Position),
+
+                                        ["selfPosition"] = hashFunc(lplr.Character:FindFirstChild("HumanoidRootPart").Position + ((lplr.Character:FindFirstChild("HumanoidRootPart").Position - v.Character:FindFirstChild("HumanoidRootPart").Position).magnitude > 14 and (CFrame.lookAt(lplr.Character:FindFirstChild("HumanoidRootPart").Position, v.Character:FindFirstChild("HumanoidRootPart").Position).LookVector * 4) or Vector3.new(0, 0, 0)))
+
+                                    },
+
+                                    ["chargedAttack"] = {["chargeRatio"] = 0.8}
+
+                                })
+
+                            end
+
+                        end
+
+                    end
+
+                end
+
+            task.wait(0.12)
+
+        until not Enabled
+
+end)
+
+window3:Button("InstaKill", function()
+
+local mt = getrawmetatable(game)
+
+local backup = mt.__namecall
+
+if setreadonly then setreadonly(mt, false) else make_writeable(mt, true) end
+
+mt.__namecall = newcclosure(function(...)
+
+   local method = getnamecallmethod()
+
+   local args = {...}
+
+   pcall(function()
+
+   if method == "FireServer" or method == "InvokeServer" and args[2] and args[2].chargedAttack then
+
+       args[2].chargedAttack.chargeRatio = 0/0
+
+       return backup(unpack(args))
+
+   end
+
+   end)
+
+   return backup(...)
+
+end)
+
+end)
+
+window2:Button("FOV", function()
+
+workspace.CurrentCamera.FieldOfView = 120
+
+end)
+
+window1:Button("AimHelper", function()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/yeerma/diggabrown/main/sidegriddy'))() 
+
+end)
+
+window1:Slider("KillAuraSpeed",0,100,20, function(value)
+
+ 
+
+end)
+
+window1:Slider("KillAuraSound",0,100,20, function(value)
+
+ 
+
+end)
+
+window1:Slider("Speed",0,23,0, function(value)
+
+ game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+
+end)
+
+window4:Button("InfJump", function()
+
+local InfiniteJumpEnabled = true game:GetService("UserInputService").JumpRequest:connect(function()  if InfiniteJumpEnabled then   game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")  end end)
+
+end)
+
+window2:Button("SpinBot", function()
+
+while true do
+
+    for i = 1, 360 do
+
+        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, math.rad(2), 0)
+
+        wait()
+
+    end
+
+end
+
+ end)
+
+ 
+
+ window2:Button("Spider(REMADE BY ME)", function()
+
+ local player = game:GetService("Players").LocalPlayer
+
+local humanoid = player.Character:WaitForChild("Humanoid")
+
+humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, true)
+
+local function onClimb()
+
+    while humanoid:GetState() == Enum.HumanoidStateType.Climbing do
+
+        humanoid:Move(Vector3.new(0, 1, 0), true)
+
+        wait()
+
+    end
+
+end
+
+humanoid.StateChanged:Connect(function(oldState, newState)
+
+    if newState == Enum.HumanoidStateType.Climbing then
+
+        onClimb()
+
+    end
+
+end)
+
+end)
+
+window1:Button("Cape", function()
+
+local player = game:GetService("Players")
+
+local lplr = player.LocalPlayer
+
+if lplr.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+
+      if lplr.Character:FindFirstChild("Torso") then
+
+        torso = lplr.Character.Torso
+
+      else
+
+        torso = lplr.Character.UpperTorso
+
+      end
+
+      local CapeP = Instance.new("Part", torso.Parent)
+
+      CapeP.Name = "Cape"
+
+      CapeP.Anchored = false
+
+      CapeP.CanCollide = false
+
+      CapeP.TopSurface = 0
+
+      CapeP.BottomSurface = 0
+
+      CapeP.Color = Color3.fromRGB(0,0,0)
+
+      CapeP.FormFactor = "Custom"
+
+      CapeP.Size = Vector3.new(0.2,0.2,0.2)
+
+      local decal = Instance.new("Decal", CapeP)
+
+      decal.Texture = "http://www.roblox.com/asset/?id=9608953346"
+
+      decal.Face = "Back"
+
+      local msh = Instance.new("BlockMesh", CapeP)
+
+      msh.Scale = Vector3.new(9,17.5,0.5)
+
+      local motor = Instance.new("Motor", CapeP)
+
+      motor.Part0 = CapeP
+
+      motor.Part1 = torso
+
+      motor.MaxVelocity = 0.01
+
+      motor.C0 = CFrame.new(0,1.75,0) * CFrame.Angles(0,math.rad(90),0)
+
+      motor.C1 = CFrame.new(0,1,0.45) * CFrame.Angles(0,math.rad(90),0)
+
+      local wave = false
+
+      repeat wait(1/44)
+
+        decal.Transparency = torso.Transparency
+
+        local ang = 0.1
+
+        local oldmag = torso.Velocity.magnitude
+
+        local mv = 0.002
+
+        if wave then
+
+          ang = ang + ((torso.Velocity.magnitude/10) * 0.05) + 0.05
+
+          wave = false
+
+end)
