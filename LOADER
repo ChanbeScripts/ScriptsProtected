@@ -1,0 +1,295 @@
+--SKIDDED ASSETS
+
+--NOTHING
+
+--LOCALS
+
+local lplr = game:GetService("Players").LocalPlayer
+
+local cam = game:GetService("Workspace").CurrentCamera
+
+local uis = game:GetService("UserInputService")
+
+local KnitClient = debug.getupvalue(require(lplr.PlayerScripts.TS.knit).setup, 6)
+
+local Client = require(game:GetService("ReplicatedStorage").TS.remotes).default.Client
+
+local getremote = function(tab)
+
+    for i,v in pairs(tab) do
+
+        if v == "Client" then
+
+            return tab[i + 1]
+
+        end
+
+    end
+
+    return ""
+
+end
+
+local killauraboostenabled = false
+
+local highjumpenabled = false
+
+local longjumpenabled = false
+
+local BoostOnPotionFlightEnabled = false
+
+local newVelocity = lplr.Character.Humanoid.MoveDirection * (23.39999998)
+
+local bedwars = {
+
+    ["SprintController"] = KnitClient.Controllers.SprintController,
+
+    ["ClientHandlerStore"] = require(lplr.PlayerScripts.TS.ui.store).ClientStore,
+
+    ["KnockbackUtil"] = require(game:GetService("ReplicatedStorage").TS.damage["knockback-util"]).KnockbackUtil,
+
+    ["PingController"] = require(lplr.PlayerScripts.TS.controllers.game.ping["ping-controller"]).PingController,
+
+    ["DamageIndicator"] = KnitClient.Controllers.DamageIndicatorController.spawnDamageIndicator,
+
+    ["SwordController"] = KnitClient.Controllers.SwordController,
+
+    ["ViewmodelController"] = KnitClient.Controllers.ViewmodelController,
+
+    ["SwordRemote"] = getremote(debug.getconstants((KnitClient.Controllers.SwordController).attackEntity)),
+
+    ["BalloonController"] = KnitClient.Controllers.BalloonController,
+
+    ["ClientStoreHandler"] = require(lplr.PlayerScripts.TS.ui.store).ClientStore,
+
+    ["BlockBreaker"] = require(game:GetService("ReplicatedStorage")["rbxts_include"]["node_modules"]["@easy-games"]["block-engine"]["out"]["client"]["break"]["block-breaker"]).BlockBreaker,
+
+    ["ProjectileRemote"] = getremote(debug.getconstants(debug.getupvalues(getmetatable(KnitClient.Controllers.ProjectileController)["launchProjectileWithValues"])[2])),
+
+    ["ConsumeRemote"] = getremote(debug.getconstants(debug.getproto(getmetatable(KnitClient.Controllers.ConsumeController).onEnable, 1))),
+
+    ["ShieldController"] = getremote(debug.getconstants(KnitClient.Controllers.InfernalShieldController.constructor)),
+
+    ["HannahController"] = KnitClient.Controllers.HannahController,
+
+}
+
+--FUNCTIONS
+
+function isalive(plr)
+
+    plr = plr or lplr
+
+    if not plr.Character then return false end
+
+    if not plr.Character:FindFirstChild("Head") then return false end
+
+    if not plr.Character:FindFirstChild("Humanoid") then return false end
+
+    return true
+
+end
+
+function canwalk(plr)
+
+    plr = plr or lplr
+
+    if not plr.Character then return false end
+
+    if not plr.Character:FindFirstChild("Humanoid") then return false end
+
+    local state = plr.Character:FindFirstChild("Humanoid"):GetState()
+
+    if state == Enum.HumanoidStateType.Dead then
+
+        return false
+
+    end
+
+    if state == Enum.HumanoidStateType.Ragdoll then
+
+        return false
+
+    end
+
+    return true
+
+end
+
+function getbeds()
+
+    local beds = {}
+
+    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+
+        if string.lower(v.Name) == "bed" and v:FindFirstChild("Covers") ~= nil and v:FindFirstChild("Covers").Color ~= lplr.Team.TeamColor then
+
+            table.insert(beds,v)
+
+        end
+
+    end
+
+    return beds
+
+end
+
+function getplayers()
+
+    local players = {}
+
+    for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+
+        if v.Team ~= lplr.Team and isalive(v) and v.Character:FindFirstChild("Humanoid").Health > 0.11 then
+
+            table.insert(players,v)
+
+        end
+
+    end
+
+    return players
+
+end
+
+function getserverpos(Position)
+
+    local x = math.round(Position.X/3)
+
+    local y = math.round(Position.Y/3)
+
+    local z = math.round(Position.Z/3)
+
+    return Vector3.new(x,y,z)
+
+end
+
+function getnearestplayer(maxdist)
+
+    local obj = lplr
+
+    local dist = math.huge
+
+    for i,v in pairs(game:GetService("Players"):GetChildren()) do
+
+        if v.Team ~= lplr.Team and v ~= lplr and isalive(v) and isalive(lplr) then
+
+            local mag = (v.Character:FindFirstChild("HumanoidRootPart").Position - lplr.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude
+
+            if (mag < dist) and (mag < maxdist) then
+
+                dist = mag
+
+                obj = v
+
+            end
+
+        end
+
+    end
+
+    return obj
+
+end
+
+function getmatchstate()
+
+    return bedwars["ClientHandlerStore"]:getState().Game.matchState
+
+end
+
+function getqueuetype()
+
+    local state = bedwars["ClientHandlerStore"]:getState()
+
+    return state.Game.queueType or "bedwars_test"
+
+end
+
+function getitem(itm)
+
+    if isalive(lplr) and lplr.Character:FindFirstChild("InventoryFolder").Value:FindFirstChild(itm) then
+
+        return true
+
+    end
+
+    return false
+
+end
+
+function hasProperty(ins,pro)
+
+    return pcall(function() _=ins[pro] end)
+
+end
+
+local RunLoops = {RenderStepTable = {}, StepTable = {}, HeartTable = {}}
+
+do
+
+	function RunLoops:BindToRenderStep(name, num, func)		if RunLoops.RenderStepTable[name] == nil then
+
+			RunLoops.RenderStepTable[name] = game:GetService("RunService").RenderStepped:Connect(func)
+
+		end
+
+	end
+
+	function RunLoops:UnbindFromRenderStep(name)
+
+		if RunLoops.RenderStepTable[name] then
+
+			RunLoops.RenderStepTable[name]:Disconnect()
+
+			RunLoops.RenderStepTable[name] = nil
+
+		end
+
+	end
+
+	function RunLoops:BindToStepped(name, num, func)
+
+		if RunLoops.StepTable[name] == nil then
+
+			RunLoops.StepTable[name] = game:GetService("RunService").Stepped:Connect(func)
+
+		end
+
+	end
+
+	function RunLoops:UnbindFromStepped(name)
+
+		if RunLoops.StepTable[name] then
+
+			RunLoops.StepTable[name]:Disconnect()
+
+			RunLoops.StepTable[name] = nil
+
+		end
+
+	end
+
+	function RunLoops:BindToHeartbeat(name, num, func)
+
+		if RunLoops.HeartTable[name] == nil then
+
+			RunLoops.HeartTable[name] = game:GetService("RunService").Heartbeat:Connect(func)
+
+		end
+
+	end
+
+	function RunLoops:UnbindFromHeartbeat(name)
+
+		if RunLoops.HeartTable[name] then
+
+			RunLoops.HeartTable[name]:Disconnect()
+
+			RunLoops.HeartTable[name] = nil
+
+		end
+
+	end
+
+end
