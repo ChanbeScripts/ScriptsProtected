@@ -1,0 +1,197 @@
+-- Gui to Lua
+
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+
+local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+TextLabel.Parent = ScreenGui
+
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+TextLabel.BackgroundTransparency = 1.000
+
+TextLabel.Position = UDim2.new(0.0285285283, 0, 0.192513362, 0)
+
+TextLabel.Size = UDim2.new(0, 200, 0, 50)
+
+TextLabel.Font = Enum.Font.LuckiestGuy
+
+TextLabel.Text = "ChanbeWare"
+
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+
+TextLabel.TextSize = 25.000
+
+TextLabel.TextWrapped = true
+
+-- Scripts:
+
+local function BVKXABV_fake_script() -- TextLabel.LocalScript 
+
+    local script = Instance.new('LocalScript', TextLabel)
+
+    
+
+    while true do
+
+        script.Parent.TextColor3 = Color3.new(255/255,0/255,0/255)
+
+        for i = 0,255,10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(255/255,i/255,0/255)
+
+        end
+
+        for i = 255,0,-10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(i/255,255/255,0/255)
+
+        end
+
+        for i = 0,255,10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(0/255,255/255,i/255)
+
+        end
+
+        for i = 255,0,-10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(0/255,i/255,255/255)
+
+        end
+
+        for i = 0,255,10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(i/255,0/255,255/255)
+
+        end
+
+        for i = 255,0,-10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(255/255,0/255,i/255)
+
+        end
+
+    end
+
+end
+
+coroutine.wrap(BVKXABV_fake_script)()
+
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
+
+local Window = Library.CreateLib("ChanbeWare", "BloodTheme")
+
+local Tab1 = Window:NewTab("Combat")
+
+local Tab1Section = Tab1:NewSection("Combat")
+
+local Tab2 = Window:NewTab("Blatant")
+
+local Tab2Section = Tab2:NewSection("Blatant idk what it means")
+
+local Tab3 = Window:NewTab("World")
+
+local Tab3Section = Tab3:NewSection("Bedwars Looks Are Boring")
+
+local Tab4 = Window:NewTab("Render")
+
+local Tab4Section = Tab4:NewSection("😎")
+
+local Tab4 = Window:NewTab("Credits")
+
+local Section = Tab:NewSection("SUPER DUPER ULTRA THANKS TO:")
+
+--Tab1
+
+Tab1Section:NewButton("Aura", "Hits Player", function()
+
+local player = game:GetService("Players")
+
+local lplr = player.LocalPlayer
+
+local cam = workspace.CurrentCamera
+
+local KnitClient = debug.getupvalue(require(lplr.PlayerScripts.TS.knit).setup, 6)
+
+local SwordCont = KnitClient.Controllers.SwordController
+
+local aura = true
+
+local DistVal = {["Value"] = 14}
+
+function Aura()
+
+	for i,v in pairs(game.Players:GetChildren()) do		if v.Character and v.Name ~= game.Players.LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
+
+			local mag = (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+
+			if mag <= DistVal["Value"] and v.Team ~= game.Players.LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") then
+
+				if v.Character.Humanoid.Health > 0 then
+
+					aura = true
+
+                    SwordCont:swingSwordAtMouse()
+
+end
+
+end
+
+end
+
+end
+
+end
+
+game:GetService("RunService").Stepped:connect(function()
+
+Aura()
+
+end)
+
+end)
+
+Tab1Section:NewButton("DamageIndicator", "Idk its just cool", function()
+
+ 
+
+end)
+
+Tab1Section:NewButton("InstaKill(Not Workin)", "", function()
+
+print("i lost it")
+
+end)
+
+Tab1Section:NewButton("NoClickDelay", "ButtonInfo", function()
+
+--NoclcikDelayHereSCRIPTER
+
+end)
+
+Tab1Section:NewButton("GodMode", "When In Game Use And Whwn Teleported To The BattleField Reset", function()
+
+ 
+
+end)
