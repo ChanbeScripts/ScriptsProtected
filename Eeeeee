@@ -1,0 +1,673 @@
+function getbeds()
+
+	local beds = {}	local blocks = game:GetService("Workspace").Map.Blocks
+
+	for _,Block in pairs(blocks:GetChildren()) do
+
+		if Block.Name == "bed" and Block.Covers.BrickColor ~= game.Players.LocalPlayer.Team.TeamColor then
+
+			table.insert(beds,Block)
+
+		end
+
+	end
+
+	return beds
+
+end
+
+function getbedsblocks()
+
+	local blockstb = {}
+
+	local blocks = game:GetService("Workspace").Map.Blocks
+
+	for i,v in pairs(blocks:GetChildren()) do
+
+		if v:IsA("Part") then
+
+			table.insert(blockstb,v)
+
+		end
+
+	end
+
+	return blockstb
+
+end
+
+function blocks(bed)
+
+	local aboveblocks = 0
+
+	local Blocks = getbedsblocks()
+
+	for _,Block in pairs(Blocks) do
+
+		if Block.Position.X == bed.X and Block.Position.Z == bed.Z and Block.Name ~= "bed" and (Block.Position.Y - bed.Y) <= 9 and Block.Position.Y > bed.Y then
+
+			aboveblocks = aboveblocks + 1
+
+		end
+
+	end
+
+	return aboveblocks
+
+end
+
+function nuker()
+
+	local beds = getbeds()
+
+	for _,bed in pairs(beds) do
+
+		local bedmagnitude = (bed.Position - game.Players.LocalPlayer.Character.PrimaryPart.Position).Magnitude
+
+		if bedmagnitude < 27 then
+
+			local upnum = blocks(bed.Position)
+
+			local x = math.round(bed.Position.X/3)
+
+			local y = math.round(bed.Position.Y/3) + upnum
+
+			local z = math.round(bed.Position.Z/3)
+
+			game:GetService("ReplicatedStorage").rbxts_include.node_modules.net.out._NetManaged.DamageBlock:InvokeServer({
+
+				["blockRef"] = {
+
+					["blockPosition"] = Vector3.new(x,y,z)
+
+				},
+
+				["hitPosition"] = Vector3.new(x,y,z),
+
+				["hitNormal"] = Vector3.new(x,y,z),
+
+			})
+
+		end
+
+	end
+
+end
+
+-- Gui to Lua
+
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+
+local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+TextLabel.Parent = ScreenGui
+
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+TextLabel.BackgroundTransparency = 1.000
+
+TextLabel.Position = UDim2.new(0.0285285283, 0, 0.192513362, 0)
+
+TextLabel.Size = UDim2.new(0, 200, 0, 50)
+
+TextLabel.Font = Enum.Font.LuckiestGuy
+
+TextLabel.Text = "ChanbeWare"
+
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+
+TextLabel.TextSize = 25.000
+
+TextLabel.TextWrapped = true
+
+-- Scripts:
+
+local function BVKXABV_fake_script() -- TextLabel.LocalScript 
+
+    local script = Instance.new('LocalScript', TextLabel)
+
+    
+
+    while true do
+
+        script.Parent.TextColor3 = Color3.new(255/255,0/255,0/255)
+
+        for i = 0,255,10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(255/255,i/255,0/255)
+
+        end
+
+        for i = 255,0,-10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(i/255,255/255,0/255)
+
+        end
+
+        for i = 0,255,10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(0/255,255/255,i/255)
+
+        end
+
+        for i = 255,0,-10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(0/255,i/255,255/255)
+
+        end
+
+        for i = 0,255,10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(i/255,0/255,255/255)
+
+        end
+
+        for i = 255,0,-10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(255/255,0/255,i/255)
+
+        end
+
+    end
+
+end
+
+coroutine.wrap(BVKXABV_fake_script)()
+
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
+
+local Window = Library.CreateLib("ChanbeWare", "BloodTheme")
+
+local Tab1 = Window:NewTab("Combat")
+
+local Tab1Section = Tab1:NewSection("Combat")
+
+local Tab2 = Window:NewTab("Blatant")
+
+local Tab2Section = Tab2:NewSection("Blatant idk what it means")
+
+local Tab3 = Window:NewTab("World")
+
+local Tab3Section = Tab3:NewSection("Bedwars Looks Are Boring")
+
+local Tab4 = Window:NewTab("Render")
+
+local Tab4Section = Tab4:NewSection("ðŸ˜Ž")
+
+local Tab5 = Window:NewTab("Credits")
+
+local Tab5Section = Tab5:NewSection("SUPER DUPER ULTRA THANKS TO:")
+
+local Tab6 = Window:NewTab("Info")
+
+local Tab6Section = Tab6:NewSection(":)")
+
+--Tab1
+
+Tab1Section:NewButton("KillAura", "AutoHit", function()
+
+local player = game:GetService("Players")
+
+local player = game:GetService("Players")
+
+local lplr = player.LocalPlayer
+
+local cam = workspace.CurrentCamera
+
+local KnitClient = debug.getupvalue(require(lplr.PlayerScripts.TS.knit).setup, 6)
+
+local SwordCont = KnitClient.Controllers.SwordController
+
+local aura = false
+
+local DistVal = {["Value"] = 55}
+
+local connection
+
+function Aura()
+
+    local closestPlayer = nil
+
+    local closestDistance = math.huge
+
+    
+
+    for i,v in pairs(game.Players:GetChildren()) do
+
+        if v ~= lplr and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+
+            local mag = (v.Character.HumanoidRootPart.Position - lplr.Character.HumanoidRootPart.Position).Magnitude
+
+            if mag <= DistVal["Value"] and v.Team ~= lplr.Team and v.Character:FindFirstChild("Humanoid") then
+
+                if v.Character.Humanoid.Health > 0 and mag < closestDistance then
+
+                    closestPlayer = v
+
+                    closestDistance = mag
+
+                end
+
+            end
+
+        end
+
+    end
+
+    
+
+    if closestPlayer then
+
+        aura = true
+
+        SwordCont:swingSwordAtMouse()
+
+    end
+
+end
+
+connection = game:GetService("RunService").Stepped:connect(function()
+
+    Aura()
+
+end)
+
+end)
+
+Tab1Section:NewSlider("Distance 1-1000", "Increase killaura distance", 1000, 1, function(val)
+
+	DistVal["Value"] = val
+
+print("SCRIPTER i$ 😎")
+
+end)
+
+Tab1Section:NewLabel("NoClickDelay")
+
+Tab1Section:NewToggle("NoClickDelay", "ToggleInfo", function(state)
+
+local UserInputService = game:GetService("UserInputService")
+
+local RunService = game:GetService("RunService")
+
+local clickTime = 0
+
+local debounce = false
+
+UserInputService.InputBegan:Connect(function(input)
+
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+        if debounce then
+
+            return
+
+        end
+
+        
+
+        clickTime = tick()
+
+        debounce = true
+
+    end
+
+end)
+
+RunService.Heartbeat:Connect(function()
+
+    if debounce and tick() - clickTime >= 0.2 then
+
+        debounce = false
+
+        -- Place your code here for the action you want to perform after the click
+
+    end
+
+end)
+
+end)
+
+Tab1Section:NewLabel("AimAssist")
+
+Tab1Section:NewButton("AimAssist", "Aim For You", function()
+
+ loadstring(game:HttpGet('https://raw.githubusercontent.com/yeerma/diggabrown/main/sidegriddy'))() 
+
+end)
+
+Tab1Section:NewLabel("Gravity")
+
+Tab1Section:NewButton("Gravity", "ButtonInfo", function()
+
+ game.Workspace.Gravity = 75  
+
+end)
+
+Tab1Section:NewLabel("More")
+
+Tab1Section:NewToggle("Reach", "ButtonInfo", function(state) 
+
+         if state then 
+
+            bedwars["CombatConstant"].RAYCAST_SWORD_CHARACTER_DISTANCE = reachval["14.4"]
+
+		else
+
+			bedwars["CombatConstant"].RAYCAST_SWORD_CHARACTER_DISTANCE = 14.4
+
+         end 
+
+ end) 
+
+Tab1Section:NewToggle("Velocity", "Prevents taking a knockback", function(state) 
+
+         if state then 
+
+                 KnockbackTable["kbDirectionStrength"] = 0 
+
+                 KnockbackTable["kbUpwardStrength"] = 0 
+
+         else 
+
+                 KnockbackTable["kbDirectionStrength"] = 100 
+
+                 KnockbackTable["kbUpwardStrength"] = 100 
+
+         end 
+
+ end)
+
+Tab3Section:NewToggle("No Fall Damage","?",function()
+
+while wait() do
+
+game:GetService("ReplicatedStorage").rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.GroundHit:FireServer()
+
+end
+
+end)
+
+local void
+
+Tab3Section:NewToggle("AntiVoid", "?", function(state)
+
+    if state then
+
+        local lplr = game.Players.LocalPlayer
+
+        void = Instance.new("Part", workspace)
+
+        void.Size = Vector3.new(9999, 0.1, 9999)
+
+        void.Position = Vector3.new(0, 20, 0)
+
+        void.Name = "void"
+
+        void.Transparency = 0.4
+
+        void.BrickColor = BrickColor.new(252,163,0)
+
+        void.CanCollide = false
+
+        void.Anchored = true
+
+        void.Material = Enum.Material.Blue
+
+        void.Touched:Connect(function(part)
+
+            if part.Parent and part.Parent:FindFirstChildOfClass("Humanoid") then
+
+                lplr.Character.HumanoidRootPart.Velocity = Vector3.new(0, 110, 0)
+
+            end
+
+        end)
+
+    else
+
+        if void then
+
+            void:Destroy()
+
+           end
+
+     end
+
+end)
+
+--Tab2
+
+Tab2Section:NewButton("PartCreator", "ButtonInfo", function()
+
+local character = game.Players.LocalPlayer.Character
+
+local humanoid = character:WaitForChild("Humanoid")
+
+local playerPos = humanoid.RootPart.Position
+
+local playerSize = humanoid.RootPart.Size
+
+local part = Instance.new("Part")
+
+part.Size = playerSize
+
+part.Position = playerPos - Vector3.new(0, playerSize.Y/2, 0)
+
+part.Parent = game.Workspace
+
+part.Color = Color3.new(1, 0, 0) -- Set the part's color to red (you can change this to any color you want)
+
+part.Anchored = true -- Set the part to be anchored in place
+
+end)
+
+Tab2Section:NewLabel("MORE IN FUTURE!")
+
+--Tab3
+
+Tab3Section:NewButton("Red Sky(anoyying)", "ButtonInfo", function()
+
+game.Lighting.Sky.SkyboxBk = "rbxassetid://6444884337"
+
+            game.Lighting.Sky.SkyboxDn = "rbxassetid://6444884785"
+
+            game.Lighting.Sky.SkyboxFt = "rbxassetid://6444884337"
+
+            game.Lighting.Sky.SkyboxLf = "rbxassetid://6444884337"
+
+            game.Lighting.Sky.SkyboxRt = "rbxassetid://6444884337"
+
+            game.Lighting.Sky.SkyboxUp = "rbxassetid://6412503613"
+
+            game.Lighting.FogColor = Color3.new(68, 1, 19)
+
+            game.Lighting.FogEnd = "200"
+
+            game.Lighting.FogStart = "0"
+
+            game.Lighting.Ambient = Color3.new(85, 0, 0)
+
+end)
+
+Tab3Section:NewLabel("Cape")
+
+Tab3Section:NewButton("CAPE", "ButtonInfo", function()
+
+    local player = game:GetService("Players")
+
+local lplr = player.LocalPlayer
+
+if lplr.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+
+      if lplr.Character:FindFirstChild("Torso") then
+
+        torso = lplr.Character.Torso
+
+      else
+
+        torso = lplr.Character.UpperTorso
+
+      end
+
+      local CapeP = Instance.new("Part", torso.Parent)
+
+      CapeP.Name = "Cape"
+
+      CapeP.Anchored = false
+
+      CapeP.CanCollide = false
+
+      CapeP.TopSurface = 0
+
+      CapeP.BottomSurface = 0
+
+      CapeP.Color = Color3.fromRGB(0,0,0)
+
+      CapeP.FormFactor = "Custom"
+
+      CapeP.Size = Vector3.new(0.2,0.2,0.2)
+
+      local decal = Instance.new("Decal", CapeP)
+
+      decal.Texture = "http://www.roblox.com/asset/?id=9695902096"
+
+      decal.Face = "Back"
+
+      local msh = Instance.new("BlockMesh", CapeP)
+
+      msh.Scale = Vector3.new(9,17.5,0.5)
+
+      local motor = Instance.new("Motor", CapeP)
+
+      motor.Part0 = CapeP
+
+      motor.Part1 = torso
+
+      motor.MaxVelocity = 0.01
+
+      motor.C0 = CFrame.new(0,1.75,0) * CFrame.Angles(0,math.rad(90),0)
+
+      motor.C1 = CFrame.new(0,1,0.45) * CFrame.Angles(0,math.rad(90),0)
+
+      local wave = false
+
+      repeat wait(1/44)
+
+        decal.Transparency = torso.Transparency
+
+        local ang = 0.1
+
+        local oldmag = torso.Velocity.magnitude
+
+        local mv = 0.002
+
+        if wave then
+
+          ang = ang + ((torso.Velocity.magnitude/10) * 0.05) + 0.05
+
+          wave = false
+
+        else
+
+          wave = true
+
+        end
+
+        ang = ang + math.min(torso.Velocity.magnitude/11, 0.5)
+
+        motor.MaxVelocity = math.min((torso.Velocity.magnitude/111), 0.04) + mv
+
+        motor.DesiredAngle = -ang
+
+        if motor.CurrentAngle < -0.2 and motor.DesiredAngle > -0.2 then
+
+          motor.MaxVelocity = 0.04
+
+        end
+
+        repeat wait() until motor.CurrentAngle == motor.DesiredAngle or math.abs(torso.Velocity.magnitude - oldmag) >= (torso.Velocity.magnitude/10) +
+
+1
+
+        if torso.Velocity.magnitude < 0.1 then
+
+          wait(0.1)
+
+        end
+
+      until not CapeP or CapeP.Parent ~= torso.Parent
+
+    end
+
+end)
+
+Tab3Section:NewLabel("Fov")
+
+Tab3Section:NewToggle("Fov", "Changes Fov", function(state)
+
+    if state then
+
+        game.Workspace.CurrentCamera.FieldOfView = 120
+
+    else
+
+        game.Workspace.CurrentCamera.FieldOfView = 80
+
+    end
+
+end)
+
+--Tab4
+
+Tab4Section:NewButton("Keyboard", "Opens Keyboard", function()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/kC3dAMvt"))()
+
+end)
+
+Tab4Section:NewLabel("FixCam")
+
+Tab4Section:NewButton("FixCam", "fix camera bug on mobile", function()
+
+	cam.CameraType = Enum.CameraType.Fixed
+
+	cam.CameraType = Enum.CameraType.Custom
+
+end)
+
+Tab4Section:NewLabel("InfJump")
+
+Tab4Section:NewButton("Inf Jump", "ButtonInfo", function()
+
+local InfiniteJumpEnabled = true game:GetService("UserInputService").JumpRequest:connect(function()  if InfiniteJumpEnabled then   game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")  end end)
+
+end)
+
+--Tab5
+
+Tab5Section:NewLabel("SCRIPTER made some script idk")
+
+Tab5Section:NewLabel("SlapXDelta watermark")
+
+Tab5Section:NewLabel("Chanbe founder ")
