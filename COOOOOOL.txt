@@ -1,0 +1,956 @@
+local entity = loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/Libraries/entityHandler.lua", true))()
+
+do
+	local oldcharacteradded = entity.characterAdded
+	entity.characterAdded = function(plr, char, localcheck)
+		return oldcharacteradded(plr, char, localcheck, function() end)
+	end
+	entity.fullEntityRefresh()
+end
+
+local colorbox
+local function makeRainbowText(text)
+	spawn(function()
+		colorbox = Color3.fromRGB(170,0,170)
+		local x = 0
+		while wait() do
+			colorbox = Color3.fromHSV(x,1,1)
+			x = x + 4.5/255
+			if x >= 1 then
+				x = 0
+			end
+		end
+	end)
+	spawn(function()
+		repeat
+			wait()
+			text.TextColor3 = colorbox
+		until true == false
+	end)
+end
+
+repeat task.wait() until (entity.isAlive)
+
+local players = game:GetService("Players")
+local lplr = players.LocalPlayer
+local oldchar = lplr.Character
+local cam = workspace.CurrentCamera
+local uis = game:GetService("UserInputService")
+local KnitClient = debug.getupvalue(require(game.Players.LocalPlayer.PlayerScripts.TS.knit).setup, 6)
+local Client = require(game:GetService("ReplicatedStorage").TS.remotes).default.Client
+local InventoryUtil = require(game:GetService("ReplicatedStorage").TS.inventory["inventory-util"]).InventoryUtil
+local itemstuff = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.item["item-meta"]).getItemMeta, 1)
+local RenderStepTable = {}
+local StepTable = {}
+local connectioninfjump
+local killauraswing = {["Enabled"] = true}
+local killaurasound = {["Enabled"] = true}
+local killaurahitdelay = {["Value"] = 2}
+local killaurasoundval = {["Value"] = 1}
+local speedval = {["Value"] = 1}
+local testtogttt = {["Value"] = 20}
+local ACC1
+local CloneGodModeFulldisablertroll
+local ACC2
+local antivoidtransparent = {["Value"] = 50}
+local antivoidcolor = {["Hue"] = 0.93, ["Sat"] = 1, ["Value"] = 1}
+local reachval = {["Value"] = 18}
+local autoclick = {["Enabled"] = true}
+local origC0 = game.ReplicatedStorage.Assets.Viewmodel.RightHand.RightWrist.C0
+local killaurafirstpersonanim = {["Value"] = true}
+local killauraanimval = {["Value"] = "Cool"}
+local SprintCont = KnitClient.Controllers.SprintController
+local SwordCont = KnitClient.Controllers.SwordController
+local KnockbackTable = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.damage["knockback-util"]).KnockbackUtil.calculateKnockbackVelocity, 1)
+local ClientHandler = Client
+
+
+local function isAlive(plr)
+	if plr then
+		return plr and plr.Character and plr.Character.Parent ~= nil and plr.Character:FindFirstChild("HumanoidRootPart") and plr.Character:FindFirstChild("Head") and plr.Character:FindFirstChild("Humanoid")
+	end
+	return lplr and lplr.Character and lplr.Character.Parent ~= nil and lplr.Character:FindFirstChild("HumanoidRootPart") and lplr.Character:FindFirstChild("Head") and lplr.Character:FindFirstChild("Humanoid")
+end
+
+local function runcode(func)
+	func()
+end
+
+local realchar
+local clone
+local function clonemake()
+    realchar = lplr.Character
+    realchar.Archivable = true
+    clone = realchar:Clone()
+    clone.Parent = workspace
+    lplr.Character = clone
+end
+
+local clonetwo
+local function secondclonemake()
+    clonetwo = realchar:Clone()
+    clonetwo.Parent = workspace
+end
+
+spawn(function()
+    while wait(1) do
+        matchState = clntstorehandlr:getState().Game.matchState
+    end
+end)
+
+local function getremote(tab)
+    for i,v in pairs(tab) do
+        if v == "Client" then
+            return tab[i + 1]
+        end
+    end
+    return ""
+end
+
+function hash(p1)
+    local hashmod = require(game:GetService("ReplicatedStorage").TS["remote-hash"]["remote-hash-util"])
+    local toret = hashmod.RemoteHashUtil:prepareHashVector3(p1)
+    return toret
+end
+  
+local function playsound(id, volume) 
+	local sound = Instance.new("Sound")
+	sound.Parent = workspace
+	sound.SoundId = id
+	sound.PlayOnRemove = true 
+	if volume then 
+		sound.Volume = volume
+	end
+	sound:Destroy()
+end
+
+local function playanimation(id) 
+	if isAlive() then 
+		local animation = Instance.new("Animation")
+		animation.AnimationId = id
+		local animatior = lplr.Character.Humanoid.Animator
+		animatior:LoadAnimation(animation):Play()
+	end
+end
+
+function isNumber(str)
+	if tonumber(str) ~= nil or str == 'inf' then
+		return true
+	end
+end
+
+function getinv(plr)
+	local plr = plr or lplr
+	local thingy, thingytwo = pcall(function() return InventoryUtil.getInventory(plr) end)
+	return (thingy and thingytwo or {
+		items = {},
+		armor = {},
+		hand = nil
+	})
+end
+
+function getsword()
+	local sd
+	local higherdamage
+	local swordslots
+	local swords = getinv().items
+	for i, v in pairs(swords) do
+		if v.itemType:lower():find("sword") or v.itemType:lower():find("blade") then
+			if higherdamage == nil or itemstuff[v.itemType].sword.damage > higherdamage then
+				sd = v
+				higherdamage = itemstuff[v.itemType].sword.damage
+				swordslots = i
+			end
+		end
+	end
+	return sd, swordslots
+end
+
+local function getremote(tab)
+	for i,v in pairs(tab) do
+		if v == "Client" then
+			return tab[i + 1]
+		end
+	end
+	return ""
+end
+
+local function hvFunc(cock)
+	return {hashedval = cock}
+end
+
+local function targetCheck(plr, check)
+	return (check and plr.Character.Humanoid.Health > 0 and plr.Character:FindFirstChild("ForceField") == nil or check == false)
+end
+
+local function isPlayerTargetable(plr, target)
+	return plr ~= lplr and plr and isAlive(plr) and targetCheck(plr, target)
+end
+
+local function GetAllNearestHumanoidToPosition(distance, amount)
+	local returnedplayer = {}
+	local currentamount = 0
+	if entity.isAlive then -- alive check
+		for i, v in pairs(game.Players:GetChildren()) do -- loop through players
+			if isPlayerTargetable((v), true, true, v.Character ~= nil) and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("Head") and currentamount < amount then -- checks
+				local mag = (lplr.Character.HumanoidRootPart.Position - v.Character:FindFirstChild("HumanoidRootPart").Position).magnitude
+				if mag <= distance then -- mag check
+					table.insert(returnedplayer, v)
+					currentamount = currentamount + 1
+				end
+			end
+		end
+		for i2,v2 in pairs(game:GetService("CollectionService"):GetTagged("Monster")) do -- monsters
+			if v2:FindFirstChild("HumanoidRootPart") and currentamount < amount and v2.Name ~= "Duck" then -- no duck
+				local mag = (lplr.Character.HumanoidRootPart.Position - v2.HumanoidRootPart.Position).magnitude
+				if mag <= distance then -- magcheck
+					table.insert(returnedplayer, {Name = (v2 and v2.Name or "Monster"), UserId = 1443379645, Character = v2}) -- monsters are npcs so I have to create a fake player for target info
+					currentamount = currentamount + 1
+				end
+			end
+		end
+	end
+	return returnedplayer -- table of attackable entities
+end
+
+local function BindToRenderStep(name, num, func)
+	if RenderStepTable[name] == nil then
+		RenderStepTable[name] = game:GetService("RunService").RenderStepped:connect(func)
+	end
+end
+local function UnbindFromRenderStep(name)
+	if RenderStepTable[name] then
+		RenderStepTable[name]:Disconnect()
+		RenderStepTable[name] = nil
+	end
+end
+
+local function BindToStepped(name, num, func)
+	if StepTable[name] == nil then
+		StepTable[name] = game:GetService("RunService").Stepped:connect(func)
+	end
+end
+local function UnbindFromStepped(name)
+	if StepTable[name] then
+		StepTable[name]:Disconnect()
+		StepTable[name] = nil
+	end
+end
+
+local attackentitycont = Client:Get(getremote(debug.getconstants(getmetatable(KnitClient.Controllers.SwordController)["attackEntity"])))
+local rgfejd = false
+local DistVal = {["Value"] = 18}
+function KillauraRemote()
+	for i,v in pairs(game.Players:GetChildren()) do
+		if v.Character and v.Name ~= game.Players.LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
+			local mag = (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+			if mag <= DistVal["Value"] and v.Team ~= game.Players.LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") then
+				if v.Character.Humanoid.Health > 0 then
+					rgfejd = true
+					local GBW = getsword()
+					local selfPosition = lplr.Character.HumanoidRootPart.Position + (DistVal["Value"] > 14 and (lplr.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude > 14 and (CFrame.lookAt(lplr.Character.HumanoidRootPart.Position, v.Character.HumanoidRootPart.Position).lookVector * 4) or Vector3.new(0, 0, 0))
+					local Entity = v.Character
+					local target = v.Character:GetPrimaryPartCFrame().Position
+					attackentitycont:CallServer({
+						["chargedAttack"] = {["chargeRatio"] = 1},
+						["weapon"] = GBW ~= nil and GBW.tool,
+						["entityInstance"] = Entity,
+						["validate"] = {["targetPosition"] = {["value"] = target,
+							["hash"] = hvFunc(target)},
+						["raycast"] = {
+							["cameraPosition"] = hvFunc(cam.CFrame.Position), 
+							["cursorDirection"] = hvFunc(Ray.new(cam.CFrame.Position, v.Character:GetPrimaryPartCFrame().Position).Unit.Direction)
+						},
+						["selfPosition"] = {["value"] = selfPosition,
+							["hash"] = hvFunc(selfPosition)
+						}
+						}
+					})
+					if killaurasound["Enabled"] then
+						playsound("rbxassetid://6760544639", killaurasoundval["Value"])
+					end
+					if killauraswing["Enabled"] then
+						playanimation("rbxassetid://4947108314")
+					end
+				end
+			else
+				rgfejd = false
+			end
+		end
+	end
+end
+
+local itemtab = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.item["item-meta"]).getItemMeta, 1)
+local CombatConstant = require(game:GetService("ReplicatedStorage").TS.combat["combat-constant"]).CombatConstant
+local function getEquipped()
+	local typetext = ""
+	local obj = (entity.isAlive and lplr.Character:FindFirstChild("HandInvItem") and lplr.Character.HandInvItem.Value or nil)
+	if obj then
+		if obj.Name:find("sword") or obj.Name:find("blade") or obj.Name:find("baguette") or obj.Name:find("scythe") or obj.Name:find("dao") then
+			typetext = "sword"
+		end
+		if obj.Name:find("wool") or itemtab[obj.Name]["block"] then
+			typetext = "block"
+		end
+		if obj.Name:find("bow") then
+			typetext = "bow"
+		end
+	end
+	return {["Object"] = obj, ["Type"] = typetext}
+end
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "NOTIFACTION";
+    Text = "Loading WaterMark"; -- what the text says (ofc)
+    Duration = 30;
+})
+
+wait(2)
+
+-- Gui to Lua
+
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+
+local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+TextLabel.Parent = ScreenGui
+
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+TextLabel.BackgroundTransparency = 1.000
+
+TextLabel.Position = UDim2.new(0.0285285283, 0, 0.192513362, 0)
+
+TextLabel.Size = UDim2.new(0, 200, 0, 50)
+
+TextLabel.Font = Enum.Font.LuckiestGuy
+
+TextLabel.Text = "ChanbeWare Apple"
+
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+
+TextLabel.TextSize = 25.000
+
+TextLabel.TextWrapped = true
+
+-- Scripts:
+
+local function BVKXABV_fake_script() -- TextLabel.LocalScript 
+
+    local script = Instance.new('LocalScript', TextLabel)
+
+    
+
+    while true do
+
+        script.Parent.TextColor3 = Color3.new(255/255,0/255,0/255)
+
+        for i = 0,255,10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(255/255,i/255,0/255)
+
+        end
+
+        for i = 255,0,-10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(i/255,255/255,0/255)
+
+        end
+
+        for i = 0,255,10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(0/255,255/255,i/255)
+
+        end
+
+        for i = 255,0,-10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(0/255,i/255,255/255)
+
+        end
+
+        for i = 0,255,10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(i/255,0/255,255/255)
+
+        end
+
+        for i = 255,0,-10 do
+
+            wait()
+
+            script.Parent.TextColor3 = Color3.new(255/255,0/255,i/255)
+
+        end
+
+    end
+
+end
+
+coroutine.wrap(BVKXABV_fake_script)()
+
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
+
+local Window = Library.CreateLib("ChanbeWare💥", "BloodTheme")
+
+local Tab1 = Window:NewTab("INFO")
+local Tab1Section = Tab1:NewSection("CREDITS")
+local Tab2 = Window:NewTab("Combat")
+local Tab2Section = Tab2:NewSection("Reach")
+local Tab3 = Window:NewTab("Blatant")
+local Tab3Section = Tab3:NewSection("KillAura")
+local Tab4 = Window:NewTab("World")
+local Tab4Section = Tab4:NewSection("Theme")
+local Tab5 = Window:NewTab("UI")
+local Tab5Section = Tab5:NewSection("UI STUFF")
+local Tab6 = Window:NewTab("Discord")
+local Tab6Section = Tab6:NewSection("Copier")
+
+--Tab1
+
+Tab1Section:NewLabel("SCRIPTER made some script idk")
+
+Tab1Section:NewLabel("SlapXDelta watermark")
+
+Tab1Section:NewLabel("Chanbe founder ")
+
+--Tab2
+
+Tab2Section:NewToggle("Sprint", "Automatically on your sprint", function(state)
+	if state then
+		BindToStepped("Sprint", 1, function()
+			if SprintCont.sprinting == false then
+				SprintCont:startSprinting()
+			end
+		end)
+	else
+		UnbindFromStepped("Sprint")
+		SprintCont:stopSprinting()
+	end
+end)
+
+Tab2Section:NewLabel("Range")
+
+Tab2Section:NewToggle("Reach", "Extend your attack range", function(state)
+	if state then
+		CombatConstant.RAYCAST_SWORD_CHARACTER_DISTANCE = (reachval["Value"] - 0.0001)
+	else
+		CombatConstant.RAYCAST_SWORD_CHARACTER_DISTANCE = 14.4
+	end
+end)
+
+Tab2Section:NewSlider("Range 18-1", "", 18, 1, function(val) -- 500 (MaxValue) | 0 (MinValue)
+	reachval["Value"] = val
+end)
+
+Tab2Section:NewLabel("NoClickDelay")
+
+Tab2Section:NewToggle("NoClickDelay", "ToggleInfo", function(state)
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local clickTime = 0
+local debounce = false
+
+UserInputService.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        if debounce then
+            return
+        end
+        
+        clickTime = tick()
+        debounce = true
+    end
+end)
+
+RunService.Heartbeat:Connect(function()
+    if debounce and tick() - clickTime >= 0.2 then
+        debounce = false
+        -- Place your code here for the action you want to perform after the click
+    end
+end)
+end)
+
+Tab2Section:NewLabel("Velocity")
+
+Tab2Section:NewToggle("Velocity", "Prevents taking a knockback", function(state)
+	if state then
+		KnockbackTable["kbDirectionStrength"] = 0
+		KnockbackTable["kbUpwardStrength"] = 0
+	else
+		KnockbackTable["kbDirectionStrength"] = 100
+		KnockbackTable["kbUpwardStrength"] = 100
+	end
+end)
+
+Tab2Section:NewLabel("AimAssist")
+
+Tab2Section:NewButton("AimAssist", "Aim For You", function()
+ loadstring(game:HttpGet('https://raw.githubusercontent.com/yeerma/diggabrown/main/sidegriddy'))() 
+end)
+
+Tab2Section:NewLabel("More")
+
+Tab2Section:NewButton("Gravity", "ButtonInfo", function()
+ game.Workspace.Gravity = 75  
+end)
+
+Tab2Section:NewButton("Fast-Click", "ButtonInfo", function()
+-- Settings
+local clickDelay = 0.1 -- Adjust this value to change the delay between each click (in seconds)
+
+-- Main function
+local function clickFaster()
+    local inputService = game:GetService("UserInputService")
+    local touchObject = nil
+    local lastClickTime = tick()
+    
+    -- Function to handle touch events
+    local function onTouch(input)
+        if input.UserInputType == Enum.UserInputType.Touch then
+            if input.UserInputState == Enum.UserInputState.Begin then
+                touchObject = input
+            elseif input.UserInputState == Enum.UserInputState.End and input == touchObject then
+                local currentTime = tick()
+                if currentTime - lastClickTime >= clickDelay then
+                    inputService:ClickButton1(Vector2.new(input.Position.X, input.Position.Y))
+                    lastClickTime = currentTime
+                end
+            end
+        end
+    end
+    
+    -- Connect the touch event
+    inputService.TouchTap:Connect(onTouch)
+end
+
+-- Call the main function
+clickFaster()
+    pr("Clicked")
+end)
+
+Tab2Section:NewToggle("AntiVoid V2", "?", function(state)
+    if state then
+        local lplr = game.Players.LocalPlayer
+        void = Instance.new("Part", workspace)
+        void.Size = Vector3.new(9999, 0.1, 9999)
+        void.Position = Vector3.new(0, 20, 0)
+        void.Name = "void"
+        void.Transparency = 0.4
+        void.BrickColor = BrickColor.new(255,165,0)
+        void.CanCollide = false
+        void.Anchored = true
+        void.Material = Enum.Material.Neon
+        void.Touched:Connect(function(part)
+            if part.Parent and part.Parent:FindFirstChildOfClass("Humanoid") then
+                lplr.Character.HumanoidRootPart.Velocity = Vector3.new(0, 110, 0)
+            end
+        end)
+    else
+        if void then
+            void:Destroy()
+           end
+     end
+end)
+
+Tab2Section:NewButton("HitBox", "ButtonInfo", function()
+_G.HeadSize = 12
+_G.Disabled = true
+ 
+game:GetService('RunService').RenderStepped:connect(function()
+if _G.Disabled then
+for i,v in next, game:GetService('Players'):GetPlayers() do
+if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+pcall(function()
+v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+v.Character.HumanoidRootPart.Transparency = 0.9
+v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really blue")
+v.Character.HumanoidRootPart.Material = "Neon"
+v.Character.HumanoidRootPart.CanCollide = false
+end)
+end
+end
+end
+end)  
+end)
+Tab2Section:NewToggle("Tracers", "Lines", function(state)
+    if state then
+        local lplr = game.Players.LocalPlayer
+local camera = game:GetService("Workspace").CurrentCamera
+local CurrentCamera = workspace.CurrentCamera
+local worldToViewportPoint = CurrentCamera.worldToViewportPoint
+
+_G.TeamCheck = false -- Use True or False to toggle TeamCheck
+
+for i,v in pairs(game.Players:GetChildren()) do
+    local Tracer = Drawing.new("Line")
+    Tracer.Visible = false
+    Tracer.Color = Color3.new(1,1,1)
+    Tracer.Thickness = 1
+    Tracer.Transparency = 1
+
+    function lineesp()
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if v.Character ~= nil and v.Character:FindFirstChild("Humanoid") ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and v ~= lplr and v.Character.Humanoid.Health > 0 then
+                local Vector, OnScreen = camera:worldToViewportPoint(v.Character.HumanoidRootPart.Position)
+
+                if OnScreen then
+                    Tracer.From = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 1)
+                    Tracer.To = Vector2.new(Vector.X, Vector.Y)
+
+                    if _G.TeamCheck and v.TeamColor == lplr.TeamColor then
+                        --//Teammates
+                        Tracer.Visible = false
+                    else
+                        --//Enemies
+                        Tracer.Visible = true
+                    end
+                else
+                    Tracer.Visible = false
+                end
+            else
+                Tracer.Visible = false
+            end
+        end)
+    end
+    coroutine.wrap(lineesp)()
+end
+
+game.Players.PlayerAdded:Connect(function(v)
+    local Tracer = Drawing.new("Line")
+    Tracer.Visible = false
+    Tracer.Color = Color3.new(1,1,1)
+    Tracer.Thickness = 1
+    Tracer.Transparency = 1
+
+    function lineesp()
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if v.Character ~= nil and v.Character:FindFirstChild("Humanoid") ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and v ~= lplr and v.Character.Humanoid.Health > 0 then
+                local Vector, OnScreen = camera:worldToViewportPoint(v.Character.HumanoidRootPart.Position)
+
+                if OnScreen then
+                    Tracer.From = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 1)
+                    Tracer.To = Vector2.new(Vector.X, Vector.Y)
+
+                    if _G.TeamCheck and v.TeamColor == lplr.TeamColor then
+                        --//Teammates
+                        Tracer.Visible = false
+                    else
+                        --//Enemies
+                        Tracer.Visible = true
+                    end
+                else
+                    Tracer.Visible = false
+                end
+            else
+                Tracer.Visible = false
+            end
+        end)
+    end
+    coroutine.wrap(lineesp)()
+end)
+    else
+        print("Toggle Off")
+    end
+end)
+Tab2Section:NewButton("ESP", "ButtonInfo", function()
+while wait(0.5) do
+    for i, box in ipairs(workspace:GetDescendants()) do
+        if box:FindFirstChild("Humanoid") then
+            if not box:FindFirstChild("EspBox") then
+                if box ~= game.Players.LocalPlayer.Character then
+                    local esp = Instance.new("BoxHandleAdornment",box)
+                    esp.Adornee = box
+                    esp.ZIndex = 0
+                    esp.Size = Vector3.new(5, 6, 2)
+                    esp.Transparency = 0.5 --Changes Transparency 
+                    esp.Color3 = Color3.fromRGB(0,255,0) --Color change
+                    esp.AlwaysOnTop = true
+                    esp.Name = "EspBox"
+                end
+            end
+        end
+    end
+end
+    print("Clicked")
+end)
+Tab2Section:NewButton("Spin", "ButtonInfo", function()
+local player = game.Players.LocalPlayer
+
+while wait() do
+    player.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(20),0)
+end
+    print("Clicked")
+end)
+
+--Tab3
+
+Tab3Section:NewButton("KillAura V2", "ButtonInfo", function()
+local player = game:GetService("Players")
+local player = game:GetService("Players")
+local lplr = player.LocalPlayer
+local cam = workspace.CurrentCamera
+local KnitClient = debug.getupvalue(require(lplr.PlayerScripts.TS.knit).setup, 6)
+local SwordCont = KnitClient.Controllers.SwordController
+
+local aura = false
+local DistVal = {["Value"] = 50}
+
+local connection
+
+function Aura()
+    local closestPlayer = nil
+    local closestDistance = math.huge
+    
+    for i,v in pairs(game.Players:GetChildren()) do
+        if v ~= lplr and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+            local mag = (v.Character.HumanoidRootPart.Position - lplr.Character.HumanoidRootPart.Position).Magnitude
+            if mag <= DistVal["Value"] and v.Team ~= lplr.Team and v.Character:FindFirstChild("Humanoid") then
+                if v.Character.Humanoid.Health > 0 and mag < closestDistance then
+                    closestPlayer = v
+                    closestDistance = mag
+                end
+            end
+        end
+    end
+    
+    if closestPlayer then
+        aura = true
+        SwordCont:swingSwordAtMouse()
+    end
+end
+
+connection = game:GetService("RunService").Stepped:connect(function()
+    Aura()
+end)
+    print("Clicked")
+end)
+Tab3Section:NewSlider("Distance 1-20", "Increase killaura distance", 20, 1, function(val)
+	DistVal["Value"] = val
+end)
+
+Tab3Section:NewToggle("No Swing", "Disable killaura swing", function(state)
+	if state then
+		if killauraswing["Enabled"] == true then
+			killauraswing["Enabled"] = false
+		end
+	else
+		if killauraswing["Enabled"] == false then
+			killauraswing["Enabled"] = true
+		end
+	end
+end)
+
+Tab3Section:NewSlider("Sound 1-0", "Adjust killaura sound", 1, 0, function(val)
+	killaurasoundval["Value"] = val
+end)
+
+Tab3Section:NewLabel("Speed")
+
+Tab3Section:NewButton("Speed", "ButtonInfo", function()
+-- Find the player
+local player = game.Players.LocalPlayer
+
+-- Set the desired speed
+local speed = 23
+
+-- Change the player's speed
+player.Character.Humanoid.WalkSpeed = speed
+player.Character.Humanoid.JumpPower = speed * 1.5 -- Optional: Adjust jump power based on speed
+end)
+
+Tab3Section:NewButton("Always Jump", "ButtonInfo", function()
+ while wait() do
+			speaker.Character.Humanoid.Jump = true
+		end
+end)
+
+Tab3Section:NewLabel("More")
+
+Tab3Section:NewToggle("CFrame", "", function(state)
+	if state then
+		BindToStepped("CFrameWalkSpeed", 1, function(time, delta)
+			if entity.isAlive then
+				local newpos = (lplr.Character.Humanoid.MoveDirection  * (speedval["Value"] - lplr.Character.Humanoid.WalkSpeed)) * delta
+
+				local raycastparameters = RaycastParams.new()
+				raycastparameters.FilterDescendantsInstances = {lplr.Character}
+				local ray = workspace:Raycast(lplr.Character.HumanoidRootPart.Position, newpos, raycastparameters)
+				if ray then newpos = (ray.Position - lplr.Character.HumanoidRootPart.Position) end
+				lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + newpos
+			end
+		end)
+	else
+		UnbindFromStepped("CFrameWalkSpeed")
+	end
+end)
+
+Tab3Section:NewSlider("Speed 1-45", "Adjust CFrame speed", 45, 1, function(s)
+	speedval["Value"] = s
+end)
+
+Tab3Section:NewButton("FixCam", "fix camera bug on mobile", function()
+	cam.CameraType = Enum.CameraType.Fixed
+	cam.CameraType = Enum.CameraType.Custom
+end)
+
+--Tab4
+
+Tab4Section:NewButton("Ambience", "ButtonInfo", function()
+ game.Lighting.Ambient = Color3.fromRGB(135, 31, 219)
+            game.Lighting.OutdoorAmbient = Color3.fromRGB(135, 31, 219)
+end)
+
+Tab4Section:NewLabel("TexturePack")
+
+Tab4Section:NewButton("Texturepack", "ButtonInfo", function()
+    loadstring(game:HttpGet(('https://pastebin.com/raw/kziTQUBT'),true))()
+end)
+
+Tab4Section:NewLabel("NightSky")
+
+Tab4Section:NewButton("NightSky", "ButtonInfo", function()
+ game.Lighting.TimeOfDay = "00:00:00"
+end)
+
+Tab4Section:NewLabel("GLIZZY SWORD")
+
+Tab4Section:NewButton("GLIZZY SWORD", "ButtonInfo", function()
+ 				--// services
+				local Players = game:GetService("Players")
+				local ReplicatedStorage = game:GetService("ReplicatedStorage")
+				local Workspace = game:GetService("Workspace")
+				
+				--// importing the textures
+				local objs = game:GetObjects("rbxassetid://13804645310")
+				local import = objs[1]
+				
+				import.Parent = game:GetService("ReplicatedStorage")
+				
+				--// very epic index
+				index = {
+				
+					{
+						name = "wood_sword",
+						offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
+						model = import:WaitForChild("Wood_Sword"),
+					},
+					
+					{
+						name = "stone_sword",
+						offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
+						model = import:WaitForChild("Stone_Sword"),
+					},
+					
+					{
+						name = "iron_sword",
+						offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
+						model = import:WaitForChild("Iron_Sword"),
+					},
+					
+					{
+						name = "diamond_sword",
+						offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
+						model = import:WaitForChild("Diamond_Sword"),
+					},
+					
+					{
+						name = "emerald_sword",
+						offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
+						model = import:WaitForChild("Emerald_Sword"),
+					},
+					
+					{
+						name = "rageblade",
+						offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-270)),
+						model = import:WaitForChild("Rageblade"),
+					},
+					
+					
+				}
+				
+				--// main viewmodel renderer
+				local func = Workspace:WaitForChild("Camera").Viewmodel.ChildAdded:Connect(function(tool)
+					
+					if(not tool:IsA("Accessory")) then return end
+					
+					for i,v in pairs(index) do
+					
+						if(v.name == tool.Name) then
+						
+							for i,v in pairs(tool:GetDescendants()) do
+					
+								if(v:IsA("Part") or v:IsA("MeshPart") or v:IsA("UnionOperation")) then
+								
+									v.Transparency = 1
+								
+								end
+							
+							end
+						
+							local model = v.model:Clone()
+							model.CFrame = tool:WaitForChild("Handle").CFrame * v.offset
+							model.CFrame *= CFrame.Angles(math.rad(0),math.rad(100),math.rad(0))
+							model.Parent = tool
+							
+							local weld = Instance.new("WeldConstraint",model)
+							weld.Part0 = model
+							weld.Part1 = tool:WaitForChild("Handle")
+							
+							local tool2 = Players.LocalPlayer.Character:WaitForChild(tool.Name)
+							
+							for i,v in pairs(tool2:GetDescendants()) do
+					
+								if(v:IsA("Part") or v:IsA("MeshPart") or v:IsA("UnionOperation")) then
+								
+									v.Transparency = 1
+								
+								end
+							
+							end
+							
+							local model2 = v.model:Clone()
+							model2.Anchored = false
+							model2.CFrame = tool2:WaitForChild("Handle").CFrame * v.offset
+							model2.CFrame *= CFrame.Angles(math.rad(0),math.rad(-105),math.rad(0))
+							model2.CFrame *= CFrame.new(-0.4,0,-0.10)
+							model2.Parent = tool2
+							local weld2 = Instance.new("WeldConstraint",model)
+							weld2.Part0 = model2
+							weld2.Part1 = tool2:WaitForChild("Handle")
+						
+						end
+					
+					end
+					
+				end)
+end)
+
+--Tab5
+
+Tab5Section:NewColorPicker("Choose UI Colour", "Color Info", Color3.fromRGB(0,0,0), function(color)
+    print(color)
+end)
+
+--Tab6
+
+Tab6Section:NewButton("Copy Discord", "ButtonInfo", function()
+ setclipboard("https://discord.gg/TrEMJ4cvGN")
+end)
